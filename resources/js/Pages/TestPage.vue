@@ -1,8 +1,39 @@
 <script setup lang="ts">
 import AuthenticatedLayout from "../../js/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
+import axios from 'axios';
 
-// Add any additional script setup code here
+// Fetch CSRF token
+const csrfToken = document.head.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+const formData = {
+  first_name: '',
+  last_name: '',
+  email: '',
+  message: '',
+  uploaded_files: null,
+};
+
+const handleSubmit = async () => {
+  const form = new FormData();
+  form.append('first_name', formData.first_name);
+  form.append('last_name', formData.last_name);
+  form.append('email', formData.email);
+  form.append('message', formData.message);
+  form.append('uploaded_files', formData.uploaded_files);
+
+  // Include CSRF token in the request headers
+  const headers = {
+    'X-CSRF-TOKEN': csrfToken,
+  };
+
+  try {
+    await axios.post(route('messages.store'), form, { headers });
+    // Handle successful form submission
+  } catch (error) {
+    // Handle error
+  }
+};
 </script>
 
 <template>
@@ -19,7 +50,8 @@ import { Head } from "@inertiajs/vue3";
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- Row 1 -->
         <div class="bg-gray-200 p-4 md:col-span-2">
-            <form action="{{ route('messages.store') }}" method="post" enctype="multipart/form-data">            <div class="mb-4">
+          <form @submit.prevent="handleSubmit" enctype="multipart/form-data">         
+            <div class="mb-4">
               <label for="first_name" class="block text-gray-700 font-bold mb-2">First Name</label>
               <input type="text" id="first_name" name="first_name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
             </div>
