@@ -1,40 +1,43 @@
 <script setup lang="ts">
+import { defineProps } from 'vue';
 import AuthenticatedLayout from "../../js/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import axios from 'axios';
 
-// Fetch CSRF token
-const csrfToken = document.head.querySelector('meta[name="csrf-token"]').getAttribute('content');
+const { authId } = defineProps(['authId']); // Fetch the authenticated user's ID passed from backend
+
+const csrfToken = document.head.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
 
 const formData = {
   first_name: '',
   last_name: '',
   email: '',
   message: '',
-  uploaded_files: null,
 };
 
-const handleSubmit = async () => {
-  const form = new FormData();
-  form.append('first_name', formData.first_name);
-  form.append('last_name', formData.last_name);
-  form.append('email', formData.email);
-  form.append('message', formData.message);
-  form.append('uploaded_files', formData.uploaded_files);
-
-  // Include CSRF token in the request headers
-  const headers = {
-    'X-CSRF-TOKEN': csrfToken,
-  };
-
+const submitForm = async () => {
   try {
-    await axios.post(route('messages.store'), form, { headers });
-    // Handle successful form submission
+    console.log("User ID:", authId); // Log the user ID
+    const response = await axios.post('/messages', {
+      ...formData,
+      user_id: authId // Include the authenticated user's ID in the request data
+    }, {
+      headers: {
+        'X-CSRF-TOKEN': csrfToken,
+        'Content-Type': 'application/json'
+      }
+    });
+    console.log(response.data); // Handle response
   } catch (error) {
-    // Handle error
+    console.error(error.response.data); // Handle error
   }
 };
 </script>
+
+
+
+
+
 
 <template>
   <Head title="Dashboard" />
@@ -50,29 +53,27 @@ const handleSubmit = async () => {
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- Row 1 -->
         <div class="bg-gray-200 p-4 md:col-span-2">
-          <form @submit.prevent="handleSubmit" enctype="multipart/form-data">         
-            <div class="mb-4">
-              <label for="first_name" class="block text-gray-700 font-bold mb-2">First Name</label>
-              <input type="text" id="first_name" name="first_name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          <form @submit.prevent="submitForm" class="space-y-4">
+            <div>
+              <label for="first_name" class="block text-sm font-medium text-gray-700">First Name</label>
+              <input type="text" id="first_name" v-model="formData.first_name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
             </div>
-            <div class="mb-4">
-              <label for="last_name" class="block text-gray-700 font-bold mb-2">Last Name</label>
-              <input type="text" id="last_name" name="last_name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <div>
+              <label for="last_name" class="block text-sm font-medium text-gray-700">Last Name</label>
+              <input type="text" id="last_name" v-model="formData.last_name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
             </div>
-            <div class="mb-4">
-              <label for="email" class="block text-gray-700 font-bold mb-2">Email</label>
-              <input type="email" id="email" name="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+              <input type="email" id="email" v-model="formData.email" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
             </div>
-            <div class="mb-4">
-              <label for="message" class="block text-gray-700 font-bold mb-2">Message</label>
-              <textarea id="message" name="message" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+            <div>
+              <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+              <textarea id="message" v-model="formData.message" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
             </div>
-            <div class="mb-4">
-              <label for="uploaded_files" class="block text-gray-700 font-bold mb-2">Upload Files</label>
-              <input type="file" id="uploaded_files" name="uploaded_files" accept=".css, .jpg, .jpeg, .png, .pdf" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-            </div>
-            <div class="flex items-center justify-between">
-              <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
+            <div>
+              <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Submit
+              </button>
             </div>
           </form>
         </div>

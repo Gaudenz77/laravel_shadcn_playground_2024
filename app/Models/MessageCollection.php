@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MessageCollection extends Model
 {
-    protected $fillable = ['first_name', 'last_name', 'email', 'message', 'uploaded_files'];
+    protected $fillable = ['first_name', 'last_name', 'email', 'message'];
 
     public function user()
     {

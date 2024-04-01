@@ -42,7 +42,9 @@ Route::get('/dashboard', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/test', function () {
-        return Inertia::render('TestPage');
+        return Inertia::render('TestPage', [
+            'authId' => auth()->id() // Pass the authenticated user's ID
+        ]);
     })->name('test');
 });
 

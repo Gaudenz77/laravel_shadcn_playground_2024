@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\MessageCollection;
+use Illuminate\Support\Facades\Validator;
 
 class MessageController extends Controller
 {
@@ -20,21 +21,35 @@ class MessageController extends Controller
         return view('messages.create');
     }
 
-    // Store a newly created message in storage
-    public function store(Request $request)
-    {
-        $request->validate([
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'email' => 'required|email',
-            'message' => 'required|string',
-            'uploaded_files' => 'nullable|file',
-        ]);
+// Store a newly created message in storage
+public function store(Request $request)
+{
+    // Define validation rules
+    $rules = [
+        'first_name' => 'required|string',
+        'last_name' => 'required|string',
+        'email' => 'required|email',
+        'message' => 'required|string',
+    ];
 
-        MessageCollection::create($request->all());
+    // Create a validator instance
+    $validator = Validator::make($request->all(), $rules);
 
-        return redirect()->back()->with('success', 'Message submitted successfully.');
+    // Check if validation fails
+    if ($validator->fails()) {
+        // Return validation errors in JSON format
+        return response()->json(['errors' => $validator->errors()], 422);
     }
+
+    // Validation passed, create message
+    $message = new MessageCollection($request->all());
+    $message->user_id = auth()->id(); // Assign the authenticated user's ID
+    $message->save();
+
+    // Return success message
+    return response()->json(['message' => 'Message submitted successfully.'], 200);
+}
+
 
     // Show the form for editing the specified message
     public function edit(MessageCollection $message)
@@ -50,7 +65,6 @@ class MessageController extends Controller
             'last_name' => 'required|string',
             'email' => 'required|email',
             'message' => 'required|string',
-            'uploaded_files' => 'nullable|file',
         ]);
 
         $message->update($request->all());
