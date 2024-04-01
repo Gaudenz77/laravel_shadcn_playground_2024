@@ -12,9 +12,9 @@ class MessageController extends Controller
     public function index()
     {
         $messages = MessageCollection::all();
-        return view('messages.index', compact('messages'));
+        return response()->json($messages);
     }
-
+    
     // Show the form for creating a new message
     public function create()
     {

@@ -48,6 +48,19 @@ Route::middleware(['auth'])->group(function () {
     })->name('test');
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/pinboard', function () {
+        return Inertia::render('PinBoard', [
+            'authId' => auth()->id() // Pass the authenticated user's ID
+        ]);
+    })->name('pinboard');
+});
+
+
+/* Route::get('/pinboard', function () {
+    return Inertia::render('PinBoard');
+})->middleware(['auth', 'verified'])->name('pinboard'); */
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

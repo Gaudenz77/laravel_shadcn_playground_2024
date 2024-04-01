@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import { defineProps } from 'vue';
 import AuthenticatedLayout from "../../js/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
@@ -8,18 +9,18 @@ const { authId } = defineProps(['authId']); // Fetch the authenticated user's ID
 
 const csrfToken = document.head.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
 
-const formData = {
+const formData = ref({
   first_name: '',
   last_name: '',
   email: '',
   message: '',
-};
+});
 
 const submitForm = async () => {
   try {
     console.log("User ID:", authId); // Log the user ID
     const response = await axios.post('/messages', {
-      ...formData,
+      ...formData.value,
       user_id: authId // Include the authenticated user's ID in the request data
     }, {
       headers: {
@@ -28,16 +29,17 @@ const submitForm = async () => {
       }
     });
     console.log(response.data); // Handle response
+
+    // Clear the form inputs after successful submission
+    formData.value.first_name = '';
+    formData.value.last_name = '';
+    formData.value.email = '';
+    formData.value.message = '';
   } catch (error) {
     console.error(error.response.data); // Handle error
   }
 };
 </script>
-
-
-
-
-
 
 <template>
   <Head title="Dashboard" />
@@ -52,7 +54,8 @@ const submitForm = async () => {
     <div class="container min-h-screen flex justify-center items-center">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- Row 1 -->
-        <div class="-mt-64 bg-gray-200 p-4 md:col-span-2 rounded-full p-20">
+        <div class="-mt-64 bg-gray-200 md:col-span-2 rounded-full p-20">
+          <h1 class="text-center mb-4"><strong>Your Message Belongs Here !!!</strong></h1>
           <form @submit.prevent="submitForm" class="space-y-4">
             <div>
               <label for="first_name" class="block text-sm font-medium text-gray-700">First Name</label>
