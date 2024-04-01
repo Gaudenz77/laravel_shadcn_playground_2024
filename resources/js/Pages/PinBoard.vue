@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref, onMounted, defineProps } from 'vue';
+import { onMounted, defineProps } from 'vue';
 import AuthenticatedLayout from "../../js/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import axios from 'axios';
+import { ref, Ref } from 'vue';
 
 const { authId } = defineProps(['authId']); // Import authId from props
 
@@ -15,8 +16,7 @@ interface Message {
   email: string;
   message: string;
 }
-
-const messages: Array<Message> = ref([]);
+const messages: Ref<Message[]> = ref([]);
 
 // Fetch messages from the backend API
 const fetchMessages = async () => {

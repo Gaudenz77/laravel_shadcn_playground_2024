@@ -35,7 +35,7 @@ const submitForm = async () => {
     formData.value.last_name = '';
     formData.value.email = '';
     formData.value.message = '';
-  } catch (error) {
+  } catch (error:any) {
     console.error(error.response.data); // Handle error
   }
 };
