@@ -52,7 +52,7 @@ const submitForm = async () => {
     <div class="container min-h-screen flex justify-center items-center">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- Row 1 -->
-        <div class="bg-gray-200 p-4 md:col-span-2">
+        <div class="-mt-64 bg-gray-200 p-4 md:col-span-2 rounded-full p-20">
           <form @submit.prevent="submitForm" class="space-y-4">
             <div>
               <label for="first_name" class="block text-sm font-medium text-gray-700">First Name</label>
