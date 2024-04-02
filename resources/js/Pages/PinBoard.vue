@@ -86,7 +86,12 @@ const formatCreatedAt = (createdAt: string) => {
 };
 
 // Set the X-CSRF-Token for Axios requests
-axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+const csrfTokenMeta = document.querySelector('meta[name="csrf-token"]');
+if (csrfTokenMeta) {
+  axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfTokenMeta.getAttribute('content') || '';
+} else {
+  console.error("CSRF token meta tag not found.");
+}
 
 </script>
 
