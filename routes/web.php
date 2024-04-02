@@ -14,7 +14,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/messages/{message}/edit', [MessageController::class, 'edit'])->name('messages.edit');
     Route::put('/messages/{message}', [MessageController::class, 'update'])->name('messages.update');
     Route::delete('/messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
+    
 });
+
+
+
 
 /*
 |--------------------------------------------------------------------------

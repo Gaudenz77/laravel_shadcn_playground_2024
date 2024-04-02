@@ -8,6 +8,7 @@
     "devDependencies": {
         "@inertiajs/vue3": "^1.0.0",
         "@tailwindcss/forms": "^0.5.3",
+        "@types/vue-router": "^2.0.0",
         "@vitejs/plugin-vue": "^5.0.0",
         "autoprefixer": "^10.4.12",
         "axios": "^1.6.4",
@@ -33,6 +34,7 @@
         "radix-vue": "^1.5.3",
         "tailwind-merge": "^2.2.2",
         "tailwindcss-animate": "^1.0.7",
-        "vaul-vue": "^0.1.0"
+        "vaul-vue": "^0.1.0",
+        "vue-router": "^4.0.13"
     }
 }
