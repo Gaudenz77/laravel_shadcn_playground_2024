@@ -1,99 +1,82 @@
 <script setup lang="ts">
-import { onMounted, defineProps } from 'vue';
+import { ref, computed } from 'vue';
 import AuthenticatedLayout from "../../js/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import axios from 'axios';
-import { ref, Ref } from 'vue';
 
-const { authId } = defineProps(['authId']); // Import authId from props
-
-// Define a reactive variable to store the messages
-interface Message {
-  id: number;
-  user_id: number;
-  first_name: string;
-  last_name: string;
-  email: string;
-  message: string;
-}
-const messages: Ref<Message[]> = ref([]);
+const authId = ref(1); // Sample value for authId, replace it with your actual value
+const messages = ref([]);
+const editedMessage = ref(null);
+const isEditing = ref(false);
+const editMode = ref(null);
 
 // Fetch messages from the backend API
 const fetchMessages = async () => {
   try {
     const response = await axios.get('/messages', {
       params: {
-        user_id: authId // Pass the authenticated user's ID as a parameter
+        user_id: authId.value
       }
     });
-    messages.value = response.data; // Assign the fetched messages to the reactive variable
+    messages.value = response.data;
   } catch (error) {
-    console.error('Error fetching messages:', error); // Log any errors
+    console.error('Error fetching messages:', error);
   }
 };
 
-const deleteMessage = async (messageId: number) => {
-  console.log('Deleting message with ID:', messageId);
+// Call the fetchMessages function when the component is mounted
+fetchMessages();
+
+// Function to format the created_at date
+const formatCreatedAt = (createdAt) => {
+  const date = new Date(createdAt);
+  return date.toLocaleString();
+};
+
+// Function to delete a message
+const deleteMessage = async (id) => {
   try {
-    await axios.delete(`/messages/${messageId}`);
-    // Find the index of the deleted message in the messages array
-    const index = messages.value.findIndex(message => message.id === messageId);
-    // If the message is found, remove it from the array
-    if (index !== -1) {
-      messages.value.splice(index, 1);
-      // Force Vue to detect the change by assigning a new array reference
-      messages.value = [...messages.value];
-    }
+    await axios.delete(`/messages/${id}`);
+    messages.value = messages.value.filter(message => message.id !== id);
   } catch (error) {
-    console.error('Error deleting message:', error); // Log any errors
+    console.error('Error deleting message:', error);
   }
 };
 
-// Define a reactive variable to store the edited message
-const editedMessage: Ref<Message | null> = ref(null);
-
-// Function to handle editing a message
-const editMessage = async (message: Message) => {
+// Function to update a message
+// Function to update a message
+const updateMessage = async (updatedMessage:any) => {
   try {
-    // Make a PUT request to the backend route for updating the message
-    const response = await axios.put(`/messages/${message.id}`, {
-      first_name: message.first_name,
-      last_name: message.last_name,
-      email: message.email,
-      message: message.message,
-    });
-
-    // Handle the response from the backend
-    if (response.status === 200) {
-      // Update the edited message
-      editedMessage.value = response.data;
-      console.log('Message updated successfully:', editedMessage.value);
+    const response = await axios.put(`/messages/${updatedMessage.id}`, updatedMessage);
+    const updatedMessageIndex = messages.value.findIndex(message => message.id === updatedMessage.id);
+    if (updatedMessageIndex !== -1) {
+      // Update the message in the local state with the updated message from the server response
+      messages.value.splice(updatedMessageIndex, 1, response.data);
     }
+    cancelEdit();
   } catch (error) {
     console.error('Error updating message:', error);
   }
-}; 
-
-// Call the fetchMessages function when the component is mounted
-onMounted(() => {
-  fetchMessages();
-});
-
-// Function to format the created_at date
-const formatCreatedAt = (createdAt: string) => {
-  const date = new Date(createdAt);
-  return date.toLocaleString(); // Format the date to a human-readable format
 };
 
-// Set the X-CSRF-Token for Axios requests
-const csrfTokenMeta = document.querySelector('meta[name="csrf-token"]');
-if (csrfTokenMeta) {
-  axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfTokenMeta.getAttribute('content') || '';
-} else {
-  console.error("CSRF token meta tag not found.");
-}
+// Function to cancel editing
+const cancelEdit = () => {
+  editedMessage.value = null;
+  editMode.value = null;
+};
 
+// Function to check if a message is the updated message
+const isUpdatedMessage = (message) => {
+  return message.message.startsWith("Message updated successfully.");
+};
+
+// Filter out "message updated successfully" or error messages
+const filteredMessages = computed(() => {
+  return messages.value.filter(message => !isUpdatedMessage(message));
+});
 </script>
+
+
 
 
 <template>
@@ -114,36 +97,39 @@ if (csrfTokenMeta) {
             <h1 class="text-center mb-4"><strong>Pinboard-Messages</strong></h1>
 
             <!-- Render messages -->
-            <div v-for="message in messages" :key="message.id">
+            <div v-for="message in filteredMessages" :key="message.id">
               <!-- Render cards for messages from the logged-in user -->
               <div v-if="message.user_id === authId" class="bg-blue-200 p-4 mb-4 rounded-md -ml-60 animate__animated animate__fadeInLeft">
                 <p><!-- User ID: {{ message.user_id }}  -->- 
                 {{ message.first_name }} {{ message.last_name }}</p>
                 <!-- <p>Email: {{ message.email }}</p> -->
-                <p>Message: "{{ message.message }}"</p> 
-                <p>Created At: {{ formatCreatedAt(message.created_at) }}</p>
-                <div><button @click="deleteMessage(message.id)" class="text-red-500">Delete</button></div>
-                <div><button @click="editMessage(message)" class="text-blue-500">Edit</button></div>
+                <template v-if="!editMode || editMode !== message.id">
+                  <p>Message: "{{ message.message }}"</p> 
+                  <p>Created At: {{ formatCreatedAt(message.created_at) }}</p>
+                  <button @click="editMode = message.id" class="text-white bg-yellow-500 px-2 py-1 rounded-md mr-2">Edit</button>
+                  <button @click="deleteMessage(message.id)" class="text-white bg-red-500 px-2 py-1 rounded-md mt-2">Delete</button>
+                </template>
+                <template v-else>
+                  <textarea v-model="message.message" class="w-full border-gray-300 rounded-md p-2"></textarea>
+                  <button @click="updateMessage(message)" class="bg-blue-500 text-white px-4 py-2 rounded-md">Update</button>
+                  <button @click="cancelEdit" class="bg-gray-500 text-white px-4 py-2 rounded-md ml-2">Cancel</button>
+                </template>
               </div>
               <!-- Render cards for other messages -->
               <div v-else class="bg-gray-200 p-4 mb-4 rounded-md -mr-60 animate__animated animate__fadeInRight">
                 <p><!-- User ID: {{ message.user_id }}  -->- 
                 {{ message.first_name }} {{ message.last_name }}</p>
                 <!-- <p>Email: {{ message.email }}</p> -->
-                
                 <p>Message: "{{ message.message }}"</p>
                 <p>Created At: {{ formatCreatedAt(message.created_at) }}</p>
               </div>
             </div>
           </div>
-
-          <!-- Row 2 -->
-          <!-- <div class="bg-gray-300 p-4">Row 2, Column 1</div>
-          <div class="bg-gray-300 p-4">Row 2, Column 2</div> -->
         </div>
       </div>
     </AuthenticatedLayout>
   </div>
 </template>
+
 
 
