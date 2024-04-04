@@ -112,18 +112,13 @@ const filteredMessages = computed(() => {
 
       <div class="container min-h-screen flex justify-center items-center">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <!-- Row 1 -->
-          <div class="p-4 md:col-span-2 p-20">
-            <h1 class="text-center mb-4"><strong>Pinboard-Messages</strong></h1>
+          <!-- Left Column: Messages from logged-in user -->
+          <div class="p-4 md:col-span-1">
+            <h1 class="text-center mb-4"><strong>Your Messages</strong></h1>
 
-            <!-- Render messages -->
-            
-              <div v-for="message in filteredMessages" :key="message.id">
-              <!-- Render cards for messages from the logged-in user -->
-              <div v-if="message.user_id === authId" class="bg-blue-200 p-4 mb-4 rounded-md -ml-60 animate__animated animate__fadeInLeft">
-                <p><!-- User ID: {{ message.user_id }}  -->- 
-                {{ message.title }} {{ message.leadtext }}</p>
-                <!-- <p>Email: {{ message.email }}</p> -->
+            <div v-for="message in filteredMessages" :key="message.id">
+              <div v-if="message.user_id === authId" class="bg-blue-200 p-4 mb-4 rounded-md animate__animated animate__fadeInLeft">
+                <p><h1  class="font-bold">{{ message.title }}</h1> <br> {{ message.leadtext }}</p>
                 <template v-if="!editMode || editMode !== message.id">
                   <p>Message: "{{ message.message }}"</p> 
                   <p>Created At: {{ formatCreatedAt(message.created_at) }}</p>
@@ -136,22 +131,23 @@ const filteredMessages = computed(() => {
                   <button @click="cancelEdit" class="bg-gray-500 text-white px-4 py-2 rounded-md ml-2">Cancel</button>
                 </template>
               </div>
-              <!-- Render cards for other messages -->
-              <div v-else class="bg-gray-200 p-4 mb-4 rounded-md -mr-60 animate__animated animate__fadeInRight">
-                <p>
-                {{ message.title }} {{ message.leadtext }}</p>
-            
+            </div>
+          </div>
+
+          <!-- Right Column: Messages from other users -->
+          <div class="p-4 md:col-span-1">
+            <h1 class="text-center mb-4"><strong>Other Messages</strong></h1>
+
+            <div v-for="message in filteredMessages" :key="message.id">
+              <div v-if="message.user_id !== authId" class="bg-gray-200 p-4 mb-4 rounded-md animate__animated animate__fadeInRight">
+                <p>{{ message.title }} {{ message.leadtext }}</p>
                 <p>Message: "{{ message.message }}"</p>
                 <p>Created At: {{ formatCreatedAt(message.created_at) }}</p>
               </div>
             </div>
-         
           </div>
         </div>
       </div>
     </AuthenticatedLayout>
   </div>
 </template>
-
-
-
