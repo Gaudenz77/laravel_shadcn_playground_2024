@@ -4,11 +4,32 @@ import AuthenticatedLayout from "../../js/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import axios from 'axios';
 
+/* import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/Components/ui/card' */
+
 const authId = ref(1); // Sample value for authId, replace it with your actual value
-const messages = ref([]);
 const editedMessage = ref(null);
-const isEditing = ref(false);
+const newLocal = false;
+/* const isEditing = ref(newLocal); */
 const editMode = ref(null);
+const messages = ref<Message[]>([]);
+
+
+interface Message {
+  id: number;
+    user_id: number;
+    user_name: string; // Add user's name property
+    title: string;
+    leadtext: string;
+    message: string;
+    created_at: string;
+}
 
 // Fetch messages from the backend API
 const fetchMessages = async () => {
@@ -43,7 +64,6 @@ const deleteMessage = async (id) => {
   }
 };
 
-// Function to update a message
 // Function to update a message
 const updateMessage = async (updatedMessage:any) => {
   try {
@@ -97,11 +117,12 @@ const filteredMessages = computed(() => {
             <h1 class="text-center mb-4"><strong>Pinboard-Messages</strong></h1>
 
             <!-- Render messages -->
-            <div v-for="message in filteredMessages" :key="message.id">
+            
+              <div v-for="message in filteredMessages" :key="message.id">
               <!-- Render cards for messages from the logged-in user -->
               <div v-if="message.user_id === authId" class="bg-blue-200 p-4 mb-4 rounded-md -ml-60 animate__animated animate__fadeInLeft">
                 <p><!-- User ID: {{ message.user_id }}  -->- 
-                {{ message.first_name }} {{ message.last_name }}</p>
+                {{ message.title }} {{ message.leadtext }}</p>
                 <!-- <p>Email: {{ message.email }}</p> -->
                 <template v-if="!editMode || editMode !== message.id">
                   <p>Message: "{{ message.message }}"</p> 
@@ -117,13 +138,14 @@ const filteredMessages = computed(() => {
               </div>
               <!-- Render cards for other messages -->
               <div v-else class="bg-gray-200 p-4 mb-4 rounded-md -mr-60 animate__animated animate__fadeInRight">
-                <p><!-- User ID: {{ message.user_id }}  -->- 
-                {{ message.first_name }} {{ message.last_name }}</p>
-                <!-- <p>Email: {{ message.email }}</p> -->
+                <p>
+                {{ message.title }} {{ message.leadtext }}</p>
+            
                 <p>Message: "{{ message.message }}"</p>
                 <p>Created At: {{ formatCreatedAt(message.created_at) }}</p>
               </div>
             </div>
+         
           </div>
         </div>
       </div>

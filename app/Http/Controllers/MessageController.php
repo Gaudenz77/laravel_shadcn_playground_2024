@@ -26,9 +26,8 @@ class MessageController extends Controller
     {
         // Define validation rules
         $rules = [
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'email' => 'required|email',
+            'title' => 'required|string',
+            'leadtext' => 'required|string',
             'message' => 'required|string',
         ];
 
@@ -51,32 +50,34 @@ class MessageController extends Controller
     }
 
 
-    // Update the specified message in storage
     public function update(Request $request, MessageCollection $message)
     {
         // Validation rules
         $rules = [
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'email' => 'required|email',
+            'title' => 'required|string',
+            'leadtext' => 'required|string',
             'message' => 'required|string',
         ];
-
-        // Validate request data
+    
+        // Validate request data manually
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
+            // Log validation errors
+            \Log::error('Validation errors:', $validator->errors()->all());
+            
             return response()->json(['errors' => $validator->errors()], 422);
         }
-
+    
         // Update message
         $message->update($request->all());
-
+    
         // Fetch the updated message with the latest data
         $updatedMessage = MessageCollection::find($message->id);
-
+    
         // Return the updated message data
         return response()->json($updatedMessage, 200);
     }
+    
 
 
     // Remove the specified message from storage

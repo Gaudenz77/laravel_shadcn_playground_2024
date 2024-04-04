@@ -10,9 +10,8 @@ const { authId } = defineProps(['authId']); // Fetch the authenticated user's ID
 const csrfToken = document.head.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
 
 const formData = ref({
-  first_name: '',
-  last_name: '',
-  email: '',
+  title: '',
+  leadtext: '',
   message: '',
 });
 
@@ -31,9 +30,8 @@ const submitForm = async () => {
     console.log(response.data); // Handle response
 
     // Clear the form inputs after successful submission
-    formData.value.first_name = '';
-    formData.value.last_name = '';
-    formData.value.email = '';
+    formData.value.title = '';
+    formData.value.leadtext = '';
     formData.value.message = '';
   } catch (error:any) {
     console.error(error.response.data); // Handle error
@@ -58,16 +56,12 @@ const submitForm = async () => {
           <h1 class="text-center mb-4"><strong>Your Message Belongs Here !!!</strong></h1>
           <form @submit.prevent="submitForm" class="space-y-4">
             <div>
-              <label for="first_name" class="block text-sm font-medium text-gray-700">First Name</label>
-              <input type="text" id="first_name" v-model="formData.first_name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+              <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
+              <input type="text" id="title" v-model="formData.title" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
             </div>
             <div>
-              <label for="last_name" class="block text-sm font-medium text-gray-700">Last Name</label>
-              <input type="text" id="last_name" v-model="formData.last_name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-            </div>
-            <div>
-              <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-              <input type="email" id="email" v-model="formData.email" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+              <label for="leadtext" class="block text-sm font-medium text-gray-700">Leadtext</label>
+              <input type="text" id="leadtext" v-model="formData.leadtext" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
             </div>
             <div>
               <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
