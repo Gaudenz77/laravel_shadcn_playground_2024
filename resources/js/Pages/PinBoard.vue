@@ -86,7 +86,7 @@ const cancelEdit = () => {
 };
 
 // Function to check if a message is the updated message
-const isUpdatedMessage = (message) => {
+const isUpdatedMessage = (message:any) => {
   return message.message.startsWith("Message updated successfully.");
 };
 
