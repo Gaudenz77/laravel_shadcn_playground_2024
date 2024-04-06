@@ -81,3 +81,11 @@
   }
 }
 
+.formOwnOne {
+  color:#333;
+}
+
+
+.dark .formOwnOne {
+  color:#333;
+}

@@ -8,11 +8,32 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
 
 const showingNavigationDropdown = ref(false);
+
+import { useDark, useToggle } from '@vueuse/core'
+
+const isDark = useDark()
+const toggleDark = useToggle(isDark)
+// On page load or when changing themes, best to add inline in `head` to avoid FOUC
+if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  document.documentElement.classList.add('dark')
+} else {
+  document.documentElement.classList.remove('dark')
+}
+
+// Whenever the user explicitly chooses light mode
+localStorage.theme = 'light'
+
+// Whenever the user explicitly chooses dark mode
+localStorage.theme = 'dark'
+
+// Whenever the user explicitly chooses to respect the OS preference
+localStorage.removeItem('theme')
+
 </script>
 
 <template>
     <div>
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen">
             <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -26,9 +47,19 @@ const showingNavigationDropdown = ref(false);
                                     />
                                 </Link>
                             </div>
+                            
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+
+                                <div class="inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out">
+                                    <button @click="toggleDark()">
+                                        <i :class="['fa-solid fa-2x', isDark ? 'fa-moon' : 'fa-sun', 'inline-block align-middle mr-2']"></i>
+                                        <span>{{ isDark ? 'Dark' : 'Light' }}</span>
+                                    </button>
+                                </div
+                                >
+                                
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>

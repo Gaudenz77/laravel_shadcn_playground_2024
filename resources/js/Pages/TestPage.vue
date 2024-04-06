@@ -49,12 +49,12 @@ const submitForm = async () => {
       </h2>
     </template>
 
-    <div class="container min-h-screen flex justify-center items-center">
+    <div class="container lg:mt-0 mt-4 px-1 lg:min-h-screen flex justify-center items-center">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- Row 1 -->
-        <div class="-mt-64 bg-gray-200 md:col-span-2 rounded-full p-20">
+        <div class=" bg-gray-200 md:col-span-2 p-2 rounded">
           <h1 class="text-center mb-4"><strong>Your Message Belongs Here !!!</strong></h1>
-          <form @submit.prevent="submitForm" class="space-y-4">
+          <form @submit.prevent="submitForm" class="formOwnOne space-y-4">
             <div>
               <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
               <input type="text" id="title" v-model="formData.title" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">

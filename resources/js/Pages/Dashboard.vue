@@ -47,6 +47,8 @@ const data = [
     { goal: 189 },
     { goal: 349 },
 ];
+
+
 </script>
 
 <template>

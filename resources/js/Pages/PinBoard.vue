@@ -17,7 +17,7 @@ const authId = ref(1); // Sample value for authId, replace it with your actual v
 const editedMessage = ref(null);
 const newLocal = false;
 /* const isEditing = ref(newLocal); */
-const editMode = ref(null);
+const editMode = ref<number | null>(null);
 const messages = ref<Message[]>([]);
 
 
@@ -49,13 +49,13 @@ const fetchMessages = async () => {
 fetchMessages();
 
 // Function to format the created_at date
-const formatCreatedAt = (createdAt) => {
+const formatCreatedAt = (createdAt:any) => {
   const date = new Date(createdAt);
   return date.toLocaleString();
 };
 
 // Function to delete a message
-const deleteMessage = async (id) => {
+const deleteMessage = async (id:any) => {
   try {
     await axios.delete(`/messages/${id}`);
     messages.value = messages.value.filter(message => message.id !== id);
@@ -117,16 +117,16 @@ const filteredMessages = computed(() => {
             <h1 class="text-center mb-4"><strong>Your Messages</strong></h1>
 
             <div v-for="message in filteredMessages" :key="message.id">
-              <div v-if="message.user_id === authId" class="bg-blue-200 p-4 mb-4 rounded-md animate__animated animate__fadeInLeft">
+              <div v-if="message.user_id === authId" class="bg-emerald-300 dark:bg-pink-800  p-4 mb-4 rounded-md animate__animated animate__fadeInLeft">
                 <p><h1  class="font-bold">{{ message.title }}</h1> <br> {{ message.leadtext }}</p>
-                <template v-if="!editMode || editMode !== message.id">
+                <template v-if="!editMode || editMode !== message.id" class="formOwnOne">
                   <p>Message: "{{ message.message }}"</p> 
                   <p>Created At: {{ formatCreatedAt(message.created_at) }}</p>
                   <button @click="editMode = message.id" class="text-white bg-yellow-500 px-2 py-1 rounded-md mr-2">Edit</button>
                   <button @click="deleteMessage(message.id)" class="text-white bg-red-500 px-2 py-1 rounded-md mt-2">Delete</button>
                 </template>
                 <template v-else>
-                  <textarea v-model="message.message" class="w-full border-gray-300 rounded-md p-2"></textarea>
+                  <textarea v-model="message.message" class="w-full border-gray-300 text-slate-800 rounded-md p-2"></textarea>
                   <button @click="updateMessage(message)" class="bg-blue-500 text-white px-4 py-2 rounded-md">Update</button>
                   <button @click="cancelEdit" class="bg-gray-500 text-white px-4 py-2 rounded-md ml-2">Cancel</button>
                 </template>
