@@ -41,7 +41,7 @@ watchEffect(() => {
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Dashboard
+                Single Story
             </h2>
         </template>
 
@@ -54,7 +54,7 @@ watchEffect(() => {
 
             <!-- Lower row with centered content -->
             <div class="flex items-center justify-center h-1/2">
-                <div class="w-1/2 pt-6">
+                <div class="w-1/2 py-12">
                     <!-- Content goes here -->
                     <h1 class="text-3xl font-bold mb-4">{{ message.title }}</h1>
                     <p class="text-lg leading-relaxed">{{ message.leadtext }}</p>

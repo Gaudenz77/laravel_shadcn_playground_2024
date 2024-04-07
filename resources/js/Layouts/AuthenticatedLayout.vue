@@ -72,7 +72,7 @@ localStorage.removeItem('theme')
                                     Test Page
                                 </NavLink>
 
- <!--                                <NavLink :href="route('singlestory')" :active="route().current('singlestory')">
+                                <!-- <NavLink :href="route('singlestory{id}')" :active="route().current('singlestory')">
                                     Single Stories
                                 </NavLink> -->
                             </div>
