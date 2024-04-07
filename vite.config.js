@@ -18,6 +18,6 @@ export default defineConfig({
             },
         }),
         VueDevTools(),
-        require("daisyui"),
+        
     ],
 });
