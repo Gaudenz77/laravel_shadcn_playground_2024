@@ -105,9 +105,10 @@ class MessageController extends Controller
     {
         return view('singlestory', ['message' => $message]);
     } */
-    public function showSingleStory(MessageCollection $message)
-{
-    return Inertia::render('SingleStory', ['message' => $message]);
-}
+    public function showSingleStory($id)
+    {
+        $message = MessageCollection::findOrFail($id);
+        return Inertia::render('SingleStory', ['message' => $message]);
+    }
 
 }
