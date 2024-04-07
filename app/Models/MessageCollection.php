@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MessageCollection extends Model
 {
-    protected $fillable = ['title', 'leadtext', 'message'];
+    protected $fillable = ['title', 'leadtext', 'message', 'image'];
 
     public function user()
     {

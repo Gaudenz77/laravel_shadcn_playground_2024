@@ -27,6 +27,7 @@ interface Message {
     user_name: string; // Add user's name property
     title: string;
     leadtext: string;
+    image: string;
     message: string;
     created_at: string;
 }
@@ -94,6 +95,10 @@ const isUpdatedMessage = (message:any) => {
 const filteredMessages = computed(() => {
   return messages.value.filter(message => !isUpdatedMessage(message));
 });
+
+import { useRouter } from 'vue-router';
+
+
 </script>
 
 
@@ -118,7 +123,11 @@ const filteredMessages = computed(() => {
 
             <div v-for="message in filteredMessages" :key="message.id">
               <div v-if="message.user_id === authId" class="bg-emerald-300 dark:bg-pink-800  p-4 mb-4 rounded-md animate__animated animate__fadeInLeft">
-                <p><h1  class="font-bold">{{ message.title }}</h1> <br> {{ message.leadtext }}</p>
+                <p>
+                  <h1  class="font-bold">{{ message.title }}</h1> <br>
+                                          {{ message.leadtext }}</p>
+                                          <img v-if="message.image" :src="'/storage/' + message.image" alt="Message Image" class="my-4 rounded-lg">
+                                          <a :href="'/singlestory/' + message.id" class="read-more-link">Read more</a>
                 <template v-if="!editMode || editMode !== message.id" class="formOwnOne">
                   <p>Message: "{{ message.message }}"</p> 
                   <p>Created At: {{ formatCreatedAt(message.created_at) }}</p>
@@ -139,7 +148,7 @@ const filteredMessages = computed(() => {
             <h1 class="text-center mb-4"><strong>Other Messages</strong></h1>
 
             <div v-for="message in filteredMessages" :key="message.id">
-              <div v-if="message.user_id !== authId" class="bg-gray-200 p-4 mb-4 rounded-md animate__animated animate__fadeInRight">
+              <div v-if="message.user_id !== authId" class="bg-orange-800 p-4 mb-4 rounded-md animate__animated animate__fadeInRight">
                 <p>{{ message.title }} {{ message.leadtext }}</p>
                 <p>Message: "{{ message.message }}"</p>
                 <p>Created At: {{ formatCreatedAt(message.created_at) }}</p>

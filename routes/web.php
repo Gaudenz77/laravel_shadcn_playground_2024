@@ -14,6 +14,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/messages/{message}/edit', [MessageController::class, 'edit'])->name('messages.edit');
     Route::put('/messages/{message}', [MessageController::class, 'update'])->name('messages.update');
     Route::delete('/messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
+
+    
+    Route::get('/singlestory/{message}', [MessageController::class, 'showSingleStory'])->name('singlestory.show');
     
 });
 
@@ -23,7 +26,7 @@ Route::middleware(['auth'])->group(function () {
 /*
 |--------------------------------------------------------------------------
 | Web Routes
-|--------------------------------------------------------------------------
+|-------------Route::get('/singlestory/{message}', [MessageController::class, 'showSingleStory'])->name('singlestory.show');-------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
@@ -60,6 +63,14 @@ Route::middleware(['auth'])->group(function () {
     })->name('pinboard');
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/singlestory', function () {
+        return Inertia::render('SingleStory', [
+            'authId' => auth()->id() // Pass the authenticated user's ID
+        ]);
+    })->name('singlestory');
+});
+
 
 /* Route::get('/pinboard', function () {
     return Inertia::render('PinBoard');
@@ -72,3 +83,5 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+
