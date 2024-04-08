@@ -84,14 +84,16 @@ const cancelEdit = () => {
             <div :class="{ 'bg-emerald-300 dark:bg-pink-800': message.user_id === authId, 'bg-orange-300 dark:bg-cyan-800': message.user_id !== authId }" class="p-4 mb-4 rounded-md animate__animated animate__fadeInLeft">              <p>
                 <h1 class="font-bold">{{ message.title }}</h1> <br>
                 {{ message.leadtext }}<br>
+                
                User_Id: {{ message.user_id }}</p>
               <img v-if="message.image" :src="'/storage/' + message.image" alt="Message Image" class="my-4 rounded-lg">
+              {{ message.message }}<br>
               <a :href="'/singlestory/' + message.id" class="read-more-link">Read more</a>
 
               <!-- Show edit and delete buttons if message is created by the currently authenticated user -->
               <template v-if="message.user_id === authId">
                 <template v-if="!editMode || editMode !== message.id">
-                  <p>Message: "{{ message.message }}"</p>
+                  <!-- <p>Message: "{{ message.message }}"</p> -->
                   <p>Created At: {{ formatCreatedAt(message.created_at) }}</p>
                   <button @click="editMode = message.id" class="text-white bg-yellow-500 px-2 py-1 rounded-md mr-2">Edit</button>
                   <button @click="deleteMessage(message.id)" class="text-white bg-red-500 px-2 py-1 rounded-md mt-2">Delete</button>

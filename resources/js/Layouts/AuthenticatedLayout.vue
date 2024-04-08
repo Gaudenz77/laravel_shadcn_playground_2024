@@ -64,13 +64,15 @@ localStorage.removeItem('theme')
                                     Dashboard
                                 </NavLink>
 
+                                <NavLink :href="route('test')" :active="route().current('test')">
+                                    Test Page
+                                </NavLink>
+
                                 <NavLink :href="route('pinboard')" :active="route().current('pinboard')">
                                     Pinboard
                                 </NavLink>
 
-                                <NavLink :href="route('test')" :active="route().current('test')">
-                                    Test Page
-                                </NavLink>
+                                
 
                                 <!-- <NavLink :href="route('singlestory{id}')" :active="route().current('singlestory')">
                                     Single Stories
