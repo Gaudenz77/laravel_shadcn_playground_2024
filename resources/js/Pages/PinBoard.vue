@@ -1,40 +1,27 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import AuthenticatedLayout from "../../js/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import axios from 'axios';
 
-/* import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/Components/ui/card' */
-
-const authId = ref(1); // Sample value for authId, replace it with your actual value
-const editedMessage = ref(null);
-const newLocal = false;
-/* const isEditing = ref(newLocal); */
+const authId = ref(null); // Initialize as null
 const editMode = ref<number | null>(null);
 const messages = ref<Message[]>([]);
 
-
 interface Message {
   id: number;
-    user_id: number;
-    user_name: string; // Add user's name property
-    title: string;
-    leadtext: string;
-    image: string;
-    message: string;
-    created_at: string;
+  user_id: number;
+  user_name: string;
+  title: string;
+  leadtext: string;
+  image: string;
+  message: string;
+  created_at: string;
 }
 
-// Fetch messages from the backend API
-const fetchMessages = async () => {
+onMounted(async () => {
   try {
+    // Fetch messages with the authenticated user's ID
     const response = await axios.get('/messages', {
       params: {
         user_id: authId.value
@@ -44,19 +31,14 @@ const fetchMessages = async () => {
   } catch (error) {
     console.error('Error fetching messages:', error);
   }
-};
+});
 
-// Call the fetchMessages function when the component is mounted
-fetchMessages();
-
-// Function to format the created_at date
-const formatCreatedAt = (createdAt:any) => {
+const formatCreatedAt = (createdAt: any) => {
   const date = new Date(createdAt);
   return date.toLocaleString();
 };
 
-// Function to delete a message
-const deleteMessage = async (id:any) => {
+const deleteMessage = async (id: any) => {
   try {
     await axios.delete(`/messages/${id}`);
     messages.value = messages.value.filter(message => message.id !== id);
@@ -65,13 +47,11 @@ const deleteMessage = async (id:any) => {
   }
 };
 
-// Function to update a message
-const updateMessage = async (updatedMessage:any) => {
+const updateMessage = async (updatedMessage: any) => {
   try {
     const response = await axios.put(`/messages/${updatedMessage.id}`, updatedMessage);
     const updatedMessageIndex = messages.value.findIndex(message => message.id === updatedMessage.id);
     if (updatedMessageIndex !== -1) {
-      // Update the message in the local state with the updated message from the server response
       messages.value.splice(updatedMessageIndex, 1, response.data);
     }
     cancelEdit();
@@ -80,29 +60,10 @@ const updateMessage = async (updatedMessage:any) => {
   }
 };
 
-// Function to cancel editing
 const cancelEdit = () => {
-  editedMessage.value = null;
   editMode.value = null;
 };
-
-// Function to check if a message is the updated message
-const isUpdatedMessage = (message:any) => {
-  return message.message.startsWith("Message updated successfully.");
-};
-
-// Filter out "message updated successfully" or error messages
-const filteredMessages = computed(() => {
-  return messages.value.filter(message => !isUpdatedMessage(message));
-});
-
-import { useRouter } from 'vue-router';
-
-
 </script>
-
-
-
 
 <template>
   <div>
@@ -116,20 +77,21 @@ import { useRouter } from 'vue-router';
       </template>
 
       <div class="container min-h-screen flex justify-center items-center">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <!-- Left Column: Messages from logged-in user -->
-          <div class="p-4 md:col-span-1">
-            <h1 class="text-center mb-4"><strong>Your Messages</strong></h1>
+        <div class="p-4 md:col-span-1">
+          <h1 class="text-center mb-4"><strong>All Messages</strong></h1>
 
-            <div v-for="message in filteredMessages" :key="message.id">
-              <div v-if="message.user_id === authId" class="bg-emerald-300 dark:bg-pink-800  p-4 mb-4 rounded-md animate__animated animate__fadeInLeft">
-                <p>
-                  <h1  class="font-bold">{{ message.title }}</h1> <br>
-                                          {{ message.leadtext }}</p>
-                                          <img v-if="message.image" :src="'/storage/' + message.image" alt="Message Image" class="my-4 rounded-lg">
-                                          <a :href="'/singlestory/' + message.id" class="read-more-link">Read more</a>
-                <template v-if="!editMode || editMode !== message.id" class="formOwnOne">
-                  <p>Message: "{{ message.message }}"</p> 
+          <div v-for="message in messages" :key="message.id">
+            <div class="bg-emerald-300 dark:bg-pink-800 p-4 mb-4 rounded-md animate__animated animate__fadeInLeft">
+              <p>
+                <h1 class="font-bold">{{ message.title }}</h1> <br>
+                {{ message.leadtext }}<br>
+               User_Id: {{ message.user_id }}</p>
+              <img v-if="message.image" :src="'/storage/' + message.image" alt="Message Image" class="my-4 rounded-lg">
+              <a :href="'/singlestory/' + message.id" class="read-more-link">Read more</a>
+
+              <template v-if="message.user_id === authId || authId === null"> <!-- Added condition for null authId -->
+                <template v-if="!editMode || editMode !== message.id">
+                  <p>Message: "{{ message.message }}"</p>
                   <p>Created At: {{ formatCreatedAt(message.created_at) }}</p>
                   <button @click="editMode = message.id" class="text-white bg-yellow-500 px-2 py-1 rounded-md mr-2">Edit</button>
                   <button @click="deleteMessage(message.id)" class="text-white bg-red-500 px-2 py-1 rounded-md mt-2">Delete</button>
@@ -139,20 +101,7 @@ import { useRouter } from 'vue-router';
                   <button @click="updateMessage(message)" class="bg-blue-500 text-white px-4 py-2 rounded-md">Update</button>
                   <button @click="cancelEdit" class="bg-gray-500 text-white px-4 py-2 rounded-md ml-2">Cancel</button>
                 </template>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right Column: Messages from other users -->
-          <div class="p-4 md:col-span-1">
-            <h1 class="text-center mb-4"><strong>Other Messages</strong></h1>
-
-            <div v-for="message in filteredMessages" :key="message.id">
-              <div v-if="message.user_id !== authId" class="bg-orange-800 p-4 mb-4 rounded-md animate__animated animate__fadeInRight">
-                <p>{{ message.title }} {{ message.leadtext }}</p>
-                <p>Message: "{{ message.message }}"</p>
-                <p>Created At: {{ formatCreatedAt(message.created_at) }}</p>
-              </div>
+              </template>
             </div>
           </div>
         </div>
