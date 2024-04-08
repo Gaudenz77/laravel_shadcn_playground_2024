@@ -4,7 +4,7 @@ import AuthenticatedLayout from "../../js/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import axios from 'axios';
 
-const authId = ref(null); // Initialize as null
+const authId = ref(2); // Initialize as null
 const editMode = ref<number | null>(null);
 const messages = ref<Message[]>([]);
 
