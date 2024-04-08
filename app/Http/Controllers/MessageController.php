@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\MessageCollection;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class MessageController extends Controller
@@ -59,7 +60,7 @@ class MessageController extends Controller
     
 
 
-    public function update(Request $request, MessageCollection $message)
+public function update(Request $request, MessageCollection $message)
     {
         // Validation rules
         $rules = [
@@ -72,7 +73,7 @@ class MessageController extends Controller
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             // Log validation errors
-            \Log::error('Validation errors:', $validator->errors()->all());
+            Log::error('Validation errors:', $validator->errors()->all());
             
             return response()->json(['errors' => $validator->errors()], 422);
         }

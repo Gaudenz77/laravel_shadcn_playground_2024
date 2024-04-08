@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, defineProps } from 'vue';
 import AuthenticatedLayout from "../../js/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import axios from 'axios';
 
-const authId = ref(2); // Initialize as null
+const props = defineProps({
+  authId: Number, // Define the prop type as Number
+});
+
+const authId = ref(props.authId); // Initialize with the received authId
 const editMode = ref<number | null>(null);
 const messages = ref<Message[]>([]);
 
@@ -21,12 +25,8 @@ interface Message {
 
 onMounted(async () => {
   try {
-    // Fetch messages with the authenticated user's ID
-    const response = await axios.get('/messages', {
-      params: {
-        user_id: authId.value
-      }
-    });
+    // Fetch messages
+    const response = await axios.get('/messages');
     messages.value = response.data;
   } catch (error) {
     console.error('Error fetching messages:', error);
@@ -81,15 +81,15 @@ const cancelEdit = () => {
           <h1 class="text-center mb-4"><strong>All Messages</strong></h1>
 
           <div v-for="message in messages" :key="message.id">
-            <div class="bg-emerald-300 dark:bg-pink-800 p-4 mb-4 rounded-md animate__animated animate__fadeInLeft">
-              <p>
+            <div :class="{ 'bg-emerald-300 dark:bg-pink-800': message.user_id === authId, 'bg-orange-300 dark:bg-cyan-800': message.user_id !== authId }" class="p-4 mb-4 rounded-md animate__animated animate__fadeInLeft">              <p>
                 <h1 class="font-bold">{{ message.title }}</h1> <br>
                 {{ message.leadtext }}<br>
                User_Id: {{ message.user_id }}</p>
               <img v-if="message.image" :src="'/storage/' + message.image" alt="Message Image" class="my-4 rounded-lg">
               <a :href="'/singlestory/' + message.id" class="read-more-link">Read more</a>
 
-              <template v-if="message.user_id === authId || authId === null"> <!-- Added condition for null authId -->
+              <!-- Show edit and delete buttons if message is created by the currently authenticated user -->
+              <template v-if="message.user_id === authId">
                 <template v-if="!editMode || editMode !== message.id">
                   <p>Message: "{{ message.message }}"</p>
                   <p>Created At: {{ formatCreatedAt(message.created_at) }}</p>

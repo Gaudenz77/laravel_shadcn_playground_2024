@@ -24,10 +24,10 @@ const messageId = ref('');
 const route = useRoute();
 
 // When the component is mounted, set the message ID from the route params
-onMounted(() => {
+/* onMounted(() => {
     messageId.value = route.params.id;
 });
-
+ */
 // Watch for changes in the message ID and update the local storage accordingly
 watchEffect(() => {
     localStorage.setItem('lastMessageId', messageId.value);

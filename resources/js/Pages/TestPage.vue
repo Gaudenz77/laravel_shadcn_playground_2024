@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, Ref } from 'vue';
 import { defineProps } from 'vue';
 import AuthenticatedLayout from "../../js/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
@@ -10,12 +10,21 @@ const csrfToken = document.head.querySelector('meta[name="csrf-token"]')?.getAtt
 // Define props
 const { authId } = defineProps(['authId']);
 
-// Define reactive variables
-const formData = ref({
+// Define the type of formData
+interface FormData {
+  title: string;
+  leadtext: string;
+  message: string;
+  image: File | null; // Allow image to be either a File or null
+}
+
+
+// Define reactive formData
+const formData: Ref<FormData> = ref({
   title: '',
   leadtext: '',
   message: '',
-  image: null, // Change image property to null initially
+  image: null,
 });
 
 const successMessage = ref<string | null>(null);
