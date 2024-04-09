@@ -4,6 +4,7 @@ import { defineProps } from 'vue';
 import AuthenticatedLayout from "../../js/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import axios from 'axios';
+import { createRouter, createWebHistory } from 'vue-router';
 
 
 const csrfToken = document.head.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';

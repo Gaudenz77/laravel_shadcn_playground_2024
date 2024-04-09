@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class MessageCollection extends Model
 {
-    protected $fillable = ['title', 'leadtext', 'message', 'image'];
+    use HasFactory;
 
+    protected $fillable = ['title', 'leadtext', 'message', 'image', 'user_id'];
+
+    // Define the relationship with the User model
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 }
-

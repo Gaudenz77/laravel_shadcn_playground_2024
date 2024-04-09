@@ -12,6 +12,9 @@ const authId = ref(props.authId); // Initialize with the received authId
 const editMode = ref<number | null>(null);
 const messages = ref<Message[]>([]);
 
+// Variable to store the original message content during editing
+const originalMessageContent = ref('');
+
 interface Message {
   id: number;
   user_id: number;
@@ -53,6 +56,10 @@ const updateMessage = async (updatedMessage: any) => {
     const updatedMessageIndex = messages.value.findIndex(message => message.id === updatedMessage.id);
     if (updatedMessageIndex !== -1) {
       messages.value.splice(updatedMessageIndex, 1, response.data);
+      // Update originalMessageContent if the updated message is the one being edited
+      if (editMode.value === updatedMessage.id) {
+        originalMessageContent.value = response.data.message;
+      }
     }
     cancelEdit();
   } catch (error) {
@@ -60,9 +67,19 @@ const updateMessage = async (updatedMessage: any) => {
   }
 };
 
+
 const cancelEdit = () => {
   editMode.value = null;
 };
+
+// Function to handle "Edit" button click
+const handleEdit = (message: Message) => {
+  // Store the original message content
+  originalMessageContent.value = message.message;
+  // Set edit mode
+  editMode.value = message.id;
+};
+
 </script>
 
 <template>
@@ -82,24 +99,24 @@ const cancelEdit = () => {
 
           <div v-for="message in messages" :key="message.id">
             <div :class="{ 'bg-emerald-300 dark:bg-pink-800': message.user_id === authId, 'bg-orange-300 dark:bg-cyan-800': message.user_id !== authId }" class="p-4 mb-4 rounded-md animate__animated animate__fadeInLeft">              <p>
-                <h1 class="font-bold">{{ message.title }}</h1> <br>
-                {{ message.leadtext }}<br>
-                
+                <h1 class="text-4xl font-bold">{{ message.title }}</h1>
+                <h3 class="text-xl italic">{{ message.leadtext }}</h3>
                User_Id: {{ message.user_id }}</p>
               <img v-if="message.image" :src="'/storage/' + message.image" alt="Message Image" class="my-4 rounded-lg">
-              {{ message.message }}<br>
+              <!-- Display original message content if not in edit mode -->
+              <p v-if="!editMode || editMode !== message.id">{{ originalMessageContent || message.message }}</p>
+              <!-- Display editable textarea in edit mode -->
+              <textarea v-model="message.message" v-else class="w-full border-gray-300 text-slate-800 rounded-md p-2"></textarea>
               <a :href="'/singlestory/' + message.id" class="read-more-link">Read more</a>
 
               <!-- Show edit and delete buttons if message is created by the currently authenticated user -->
               <template v-if="message.user_id === authId">
                 <template v-if="!editMode || editMode !== message.id">
-                  <!-- <p>Message: "{{ message.message }}"</p> -->
                   <p>Created At: {{ formatCreatedAt(message.created_at) }}</p>
-                  <button @click="editMode = message.id" class="text-white bg-yellow-500 px-2 py-1 rounded-md mr-2">Edit</button>
+                  <button @click="handleEdit(message)" class="text-white bg-yellow-500 px-2 py-1 rounded-md mr-2">Edit</button>
                   <button @click="deleteMessage(message.id)" class="text-white bg-red-500 px-2 py-1 rounded-md mt-2">Delete</button>
                 </template>
                 <template v-else>
-                  <textarea v-model="message.message" class="w-full border-gray-300 text-slate-800 rounded-md p-2"></textarea>
                   <button @click="updateMessage(message)" class="bg-blue-500 text-white px-4 py-2 rounded-md">Update</button>
                   <button @click="cancelEdit" class="bg-gray-500 text-white px-4 py-2 rounded-md ml-2">Cancel</button>
                 </template>
