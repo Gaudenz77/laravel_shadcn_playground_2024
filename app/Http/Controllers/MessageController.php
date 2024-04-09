@@ -97,15 +97,7 @@ public function update(Request $request, MessageCollection $message)
         return response()->json(['message' => 'Message deleted successfully.'], 200);
     }
 
-    /* public function showSingleStory(MessageCollection $message)
-    {
-        
-        return response()->json($message);
-    } */
-    /* public function showSingleStory(MessageCollection $message)
-    {
-        return view('singlestory', ['message' => $message]);
-    } */
+
     public function showSingleStory($id)
     {
         $message = MessageCollection::findOrFail($id);
