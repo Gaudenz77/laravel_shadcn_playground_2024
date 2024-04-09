@@ -93,3 +93,11 @@
 h1 {
   font-size:2rem;
 }
+
+.file\:bg-transparent::file-selector-button {
+  color:#333;
+}
+
+.file\:bg-transparent::file-selector-button {
+  color:#ebebeb;
+}

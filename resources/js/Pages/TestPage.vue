@@ -5,6 +5,8 @@ import AuthenticatedLayout from "../../js/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import axios from 'axios';
 import { createRouter, createWebHistory } from 'vue-router';
+import { Input } from '@/Components/ui/input'
+import { Label } from '@/Components/ui/label'
 
 
 const csrfToken = document.head.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
@@ -85,10 +87,10 @@ const submitForm = async () => {
       </h2>
     </template>
 
-    <div class="container lg:mt-0 mt-4 px-1 lg:min-h-screen flex justify-center items-center">
+    <div class="container lg:-mt-16 mt-4 px-1 lg:min-h-screen flex justify-center items-center">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- Row 1 -->
-        <div class=" bg-gray-200 md:col-span-2 rounded-full p-20">
+        <div class=" col-span-2">
           <h1 class="text-center mb-4"><strong>Your Message Belongs Here !!!</strong></h1>
           <form @submit.prevent="submitForm" enctype="multipart/form-data" class="formOwnOne space-y-4">
             <div>
@@ -104,8 +106,9 @@ const submitForm = async () => {
               <textarea id="message" v-model="formData.message" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
             </div>
             <div>
-              <label for="image" class="block text-sm font-medium text-gray-700">Image</label>
-              <input type="file" id="image" accept="image/*" @change="handleImageChange" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+              <Label for="image" class="block text-sm font-medium text-gray-700">Image</Label>
+              <Input type="file" id="image" accept="image/*" @change="handleImageChange" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md fileInputOwn" />
+            
             </div>
             <div>
               <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
