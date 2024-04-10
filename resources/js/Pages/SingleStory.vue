@@ -7,11 +7,13 @@ import axios from 'axios';
 const props = defineProps<{
     message: {
         id: number;
+        user_id: number; // Add user_id to the message object
         title: string;
         leadtext: string;
         message: string;
         image: string | null;
     };
+    authId: number; // Add authId prop
 }>();
 
 const editMode = ref(false);
@@ -65,8 +67,8 @@ const cancelEdit = () => {
         </template>
         <div class="min-h-screen">
             <!-- Upper row with full-width image -->
-            <div class="bg-gray-800">
-                <img v-if="message.image" :src="'/storage/' + message.image" class="w-full h-[500px]" alt="Message Image" />
+            <div class="relative h-[500px] overflow-hidde">
+                <img v-if="message.image" :src="'/storage/' + message.image" class="absolute inset-0 w-full h-full object-cover object-center" alt="Message Image" />
             </div>
             <!-- Lower row with centered content -->
             <div class="flex items-center justify-center h-1/2">
@@ -86,13 +88,18 @@ const cancelEdit = () => {
                     <p v-else class="textSingle text-sm">{{ props.message.message }}</p>
                     <!-- Buttons for edit and delete -->
                     <div class="flex justify-center mt-4 gap-2">
-                        <button v-if="!editMode" @click="startEditMode" class="text-white bg-yellow-500 px-4 py-2 rounded-md mr-0">Edit</button>                        
-                        <button v-if="editMode" @click="updateMessage" class="text-white bg-blue-500 px-4 py-2 rounded-md mr-0">Update</button>
-                        <button @click="deleteMessage(props.message.id)" class="text-white bg-red-500 px-4 py-2 rounded-md">Delete</button>
+                        <button v-if="props.authId === props.message.user_id" @click="!editMode ? startEditMode() : updateMessage()" class="text-white bg-yellow-500 px-4 py-2 rounded-md mr-0">{{ !editMode ? 'Edit' : 'Update' }}</button>
+                        <button v-if="props.authId === props.message.user_id && !editMode" @click="deleteMessage(props.message.id)" class="text-white bg-red-500 px-4 py-2 rounded-md">Delete</button>
                         <button v-if="editMode" @click="cancelEdit" class="text-white bg-gray-500 px-4 py-2 rounded-md">Cancel</button>
                         <a href="/pinboard" type="button" class="text-white bg-gray-500 px-4 py-2 rounded-md">Back to Pinboard</a>
+                        
                     </div>
+                    <div class="flex mt-4 justify-center align-middle ">
+                            <p>Auth ID: {{ props.authId }}</p>
+                            <p>Message User ID: {{ props.message.user_id }}</p>
+                        </div>
                 </div>
+                
             </div>
         </div>
     </AuthenticatedLayout>

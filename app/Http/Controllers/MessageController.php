@@ -30,7 +30,7 @@ class MessageController extends Controller
             'title' => 'required|string',
             'leadtext' => 'required|string',
             'message' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
     
         // Create a new message instance
@@ -101,7 +101,10 @@ public function update(Request $request, MessageCollection $message)
     public function showSingleStory($id)
     {
         $message = MessageCollection::findOrFail($id);
-        return Inertia::render('SingleStory', ['message' => $message]);
+        return Inertia::render('SingleStory', [
+            'message' => $message,
+            'authId' => auth()->id() // Pass the authenticated user's ID
+        ]);
     }
     
 
