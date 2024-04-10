@@ -76,8 +76,8 @@
   }
   body {
     @apply bg-background text-foreground;
-    /* font-family: "Raleway", sans-serif !important; */
-    font-family: "Work", sans-serif !important;
+    font-family: "Raleway", sans-serif !important;    
+    /* font-family: "Work", sans-serif !important; */
   }
 }
 

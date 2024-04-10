@@ -93,7 +93,7 @@ const handleEdit = (message: Message) => {
         </h2>
       </template>
 
-      <div class="container min-h-screen flex justify-center items-center">
+     <!--  <div class="container min-h-screen flex justify-center items-center">
         <div class="p-4 md:col-span-1">
           <h1 class="text-center mb-4"><strong>All Messages</strong></h1>
 
@@ -102,15 +102,15 @@ const handleEdit = (message: Message) => {
                 <h1 class="text-4xl font-bold">{{ message.title }}</h1>
                 <h3 class="text-xl italic">{{ message.leadtext }}</h3>
                User_Id: {{ message.user_id }}</p>
-              <img v-if="message.image" :src="'/storage/' + message.image" alt="Message Image" class="my-4 rounded-lg">
+              <img v-if="message.image" :src="'/storage/' + message.image" alt="Message Image" class="my-4 rounded-lg"> -->
               <!-- Display original message content if not in edit mode -->
-              <p v-if="!editMode || editMode !== message.id">{{ originalMessageContent || message.message }}</p>
+              <!-- <p v-if="!editMode || editMode !== message.id">{{ originalMessageContent || message.message }}</p> -->
               <!-- Display editable textarea in edit mode -->
-              <textarea v-model="message.message" v-else class="w-full border-gray-300 text-slate-800 rounded-md p-2"></textarea>
-              <a :href="'/singlestory/' + message.id" class="read-more-link">Read more</a>
+              <!-- <textarea v-model="message.message" v-else class="w-full border-gray-300 text-slate-800 rounded-md p-2"></textarea>
+              <a :href="'/singlestory/' + message.id" class="read-more-link">Read more</a> -->
 
               <!-- Show edit and delete buttons if message is created by the currently authenticated user -->
-              <template v-if="message.user_id === authId">
+              <!-- <template v-if="message.user_id === authId">
                 <template v-if="!editMode || editMode !== message.id">
                   <p>Created At: {{ formatCreatedAt(message.created_at) }}</p>
                   <button @click="handleEdit(message)" class="text-white bg-yellow-500 px-2 py-1 rounded-md mr-2">Edit</button>
@@ -124,11 +124,11 @@ const handleEdit = (message: Message) => {
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
 
 
-      <div class="container min-h-screen grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
+      <div class="container min-h-screen grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center my-12">
         <div v-for="message in messages" :key="message.id">
           <a href="#" class="group relative block aspect-w-4 aspect-h-5"   style="height:auto;">
             <span class="absolute inset-0 border-2 border-dashed border-black"></span>
