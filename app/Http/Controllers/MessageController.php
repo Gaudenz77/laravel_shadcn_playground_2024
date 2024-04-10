@@ -103,5 +103,6 @@ public function update(Request $request, MessageCollection $message)
         $message = MessageCollection::findOrFail($id);
         return Inertia::render('SingleStory', ['message' => $message]);
     }
+    
 
 }

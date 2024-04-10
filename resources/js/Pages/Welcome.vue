@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
 import MyFooter from '@/Components/MyFooter.vue';
+import { defineProps } from 'vue';
 
 defineProps<{
     canLogin?: boolean;
@@ -11,7 +12,7 @@ defineProps<{
 </script>
 
 <template>
-    <!-- <Head title="Welcome" /> -->
+    <Head title="Welcome" />
 
     <!-- Remove max-w-7xl and mx-auto classes from the parent div -->
     <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen">
