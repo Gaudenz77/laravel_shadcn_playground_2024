@@ -7,6 +7,7 @@ import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import MyFooter from '@/Components/MyFooter.vue';
 import { Link } from '@inertiajs/vue3';
+import MyNavbar from '@/Components/MyNavbar.vue';
 
 const showingNavigationDropdown = ref(false);
 
@@ -35,8 +36,9 @@ localStorage.removeItem('theme')
 
 <template>
     <div>
+        <MyNavbar />
         <div class="min-h-screen">
-            <nav class="bg-white border-b border-gray-100">
+        <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
@@ -76,9 +78,7 @@ localStorage.removeItem('theme')
 
                                 
 
-                                <!-- <NavLink :href="route('singlestory{id}')" :active="route().current('singlestory')">
-                                    Single Stories
-                                </NavLink> -->
+                                
                             </div>
 
                            
@@ -187,6 +187,7 @@ localStorage.removeItem('theme')
                     </div>
                 </div>
             </nav>
+            
 
             <!-- Page Heading -->
             <header class="bg-white shadow" v-if="$slots.header">

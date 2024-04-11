@@ -40,8 +40,8 @@ const loggedIn = computed(() => {
 <nav class="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
 
-    <div class="inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out">
-        <button @click="toggleDark()">
+    <div class="inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 ">
+        <button @click="toggleDark()" class="text-orange-300 dark:text-cyan-800">
             <i :class="['fa-solid fa-2x', isDark ? 'fa-moon' : 'fa-sun', 'inline-block align-middle mr-2']"></i>
             <span>{{ isDark ? 'Dark' : 'Light' }}</span>
         </button>

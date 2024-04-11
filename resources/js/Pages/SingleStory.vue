@@ -4,13 +4,11 @@ import AuthenticatedLayout from "../../js/Layouts/AuthenticatedLayout.vue";
 import GuestLayout from "../../js/Layouts/GuestLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import axios from 'axios';
-import MyFooter from '@/Components/MyFooter.vue';
-import MyNavbar from '@/Components/MyNavbar.vue';
 
 const props = defineProps<{
     message: {
         id: number;
-        user_id: number; // Add user_id to the message object
+        user_id: number;
         title: string;
         leadtext: string;
         message: string;
@@ -58,17 +56,19 @@ const cancelEdit = () => {
     props.message.leadtext = originalLeadText;
     props.message.message = originalMessageContent;
 };
+
 </script>
 
 <template>
     
-    <Head title="Dashboard" />
+    <Head title="Dashboard"></Head>
+
     <GuestLayout>
-        <!-- <template #header>
+        <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Single Story
             </h2>
-        </template> -->
+        </template>
         <div class="min-h-screen">
             <!-- Upper row with full-width image -->
             <div class="relative h-[500px] overflow-hidde">
@@ -98,10 +98,12 @@ const cancelEdit = () => {
                         <a href="/pinboard" type="button" class="text-white bg-gray-500 px-4 py-2 rounded-md">Back to Pinboard</a>
                         
                     </div>
-                    <div class="flex mt-4 justify-center align-middle ">
-                            <p>Auth ID: {{ props.authId }}</p>
-                            <p>Message User ID: {{ props.message.user_id }}</p>
-                        </div>
+                    <!-- admin only start -->
+                    <div  v-if="$page.props.auth.user" class="flex mt-4 justify-center align-middle ">
+                        <p>Auth ID: {{ props.authId }}</p>
+                        <p>Message User ID: {{ props.message.user_id }}</p>
+                    </div>
+                    <!-- admin only stop -->
                 </div>
                 
             </div>
@@ -109,7 +111,6 @@ const cancelEdit = () => {
      
     </GuestLayout>
     
-
 </template>
 
 <style>
