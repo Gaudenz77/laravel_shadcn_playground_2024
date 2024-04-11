@@ -109,7 +109,7 @@ const cancelEdit = () => {
             </div>
         </div>
      
-    </GuestLayout>
+    <   >
     
 </template>
 
