@@ -25,7 +25,7 @@ localStorage.theme = 'dark'
 // Whenever the user explicitly chooses to respect the OS preference
 localStorage.removeItem('theme')
 
-import { ref, defineProps, computed } from 'vue';
+import { computed } from 'vue';
 
 import { usePage } from '@inertiajs/vue3'
 
@@ -89,7 +89,7 @@ const loggedIn = computed(() => {
         </li>
         <li>
           <!-- <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Services</a> -->
-          <NavLink :href="route('test')" :active="route().current('test')">
+          <NavLink v-if="$page.props.auth.user" :href="route('test')" :active="route().current('test')">
               Test Page
           </NavLink>
         </li>
