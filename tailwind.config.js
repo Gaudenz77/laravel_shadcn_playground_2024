@@ -9,6 +9,7 @@ export default {
     './storage/framework/views/*.php',
     './resources/views/**/*.blade.php',
     './resources/js/**/*.{ts,tsx,vue}',
+  
   ],
 
   theme: {
@@ -80,5 +81,5 @@ export default {
     },
   },
 
-  plugins: [require('@tailwindcss/forms'), require("daisyui")],
+  plugins: [require('@tailwindcss/forms'), require("daisyui")/* , require("flowbite/plugin") */],
 }

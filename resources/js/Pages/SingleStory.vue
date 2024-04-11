@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { ref, defineProps } from 'vue';
 import AuthenticatedLayout from "../../js/Layouts/AuthenticatedLayout.vue";
+import GuestLayout from "../../js/Layouts/GuestLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import axios from 'axios';
+import MyFooter from '@/Components/MyFooter.vue';
+import MyNavbar from '@/Components/MyNavbar.vue';
 
 const props = defineProps<{
     message: {
@@ -58,13 +61,14 @@ const cancelEdit = () => {
 </script>
 
 <template>
+    
     <Head title="Dashboard" />
-    <AuthenticatedLayout>
-        <template #header>
+    <GuestLayout>
+        <!-- <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Single Story
             </h2>
-        </template>
+        </template> -->
         <div class="min-h-screen">
             <!-- Upper row with full-width image -->
             <div class="relative h-[500px] overflow-hidde">
@@ -102,7 +106,10 @@ const cancelEdit = () => {
                 
             </div>
         </div>
-    </AuthenticatedLayout>
+     
+    </GuestLayout>
+    
+
 </template>
 
 <style>

@@ -12,6 +12,7 @@ const showingNavigationDropdown = ref(false);
 
 import { useDark, useToggle } from '@vueuse/core'
 
+
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
 // On page load or when changing themes, best to add inline in `head` to avoid FOUC
@@ -59,7 +60,7 @@ localStorage.removeItem('theme')
                                         <span>{{ isDark ? 'Dark' : 'Light' }}</span>
                                     </button>
                                 </div
-                                >
+                               >
                                 
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard

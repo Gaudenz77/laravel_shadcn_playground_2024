@@ -1,26 +1,19 @@
 <script setup lang="ts">
 import { ref, onMounted, defineProps } from 'vue';
 import AuthenticatedLayout from "../../js/Layouts/AuthenticatedLayout.vue";
-import GuestLayout from "../../js/Layouts/GuestLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import axios from 'axios';
 
 const props = defineProps({
-  auth: Object, // Define the prop type as Object
-});
-
-
-/* const props = defineProps({
   authId: Number, // Define the prop type as Number
 });
 
 const authId = ref(props.authId); // Initialize with the received authId
-const editMode = ref<number | null>(null); */
-
-;
-// Variable to store the original message content during editing
-/* const originalMessageContent = ref(''); */
+const editMode = ref<number | null>(null);
 const messages = ref<Message[]>([]);
+
+// Variable to store the original message content during editing
+const originalMessageContent = ref('');
 
 interface Message {
   id: number;
@@ -43,7 +36,7 @@ onMounted(async () => {
   }
 });
 
-/* const formatCreatedAt = (createdAt: any) => {
+const formatCreatedAt = (createdAt: any) => {
   const date = new Date(createdAt);
   return date.toLocaleString();
 };
@@ -55,9 +48,9 @@ const deleteMessage = async (id: any) => {
   } catch (error) {
     console.error('Error deleting message:', error);
   }
-}; */
+};
 
-/* const updateMessage = async (updatedMessage: any) => {
+const updateMessage = async (updatedMessage: any) => {
   try {
     const response = await axios.put(`/messages/${updatedMessage.id}`, updatedMessage);
     const updatedMessageIndex = messages.value.findIndex(message => message.id === updatedMessage.id);
@@ -72,10 +65,10 @@ const deleteMessage = async (id: any) => {
   } catch (error) {
     console.error('Error updating message:', error);
   }
-}; */
+};
 
 
-/* const cancelEdit = () => {
+const cancelEdit = () => {
   editMode.value = null;
 };
 
@@ -85,7 +78,7 @@ const handleEdit = (message: Message) => {
   originalMessageContent.value = message.message;
   // Set edit mode
   editMode.value = message.id;
-}; */
+};
 
 </script>
 
@@ -93,12 +86,12 @@ const handleEdit = (message: Message) => {
   <div>
     <Head title="Dashboard" />
 
-    <GuestLayout>
-        <template #header>
-          <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Pinboard
-          </h2>
-        </template>
+    <AuthenticatedLayout>
+      <template #header>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+          Pinboard
+        </h2>
+      </template>
 
      <!--  <div class="container min-h-screen flex justify-center items-center">
         <div class="p-4 md:col-span-1">
@@ -161,6 +154,6 @@ const handleEdit = (message: Message) => {
           </a>
         </div>
       </div>
-    </GuestLayout>
+    </AuthenticatedLayout>
   </div>
 </template>

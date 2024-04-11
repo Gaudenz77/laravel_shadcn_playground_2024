@@ -106,6 +106,12 @@ public function update(Request $request, MessageCollection $message)
             'authId' => auth()->id() // Pass the authenticated user's ID
         ]);
     }
+
+    public function publicIndex()
+{
+    $messages = MessageCollection::all();
+        return response()->json($messages);
+}
     
 
 }

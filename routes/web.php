@@ -7,7 +7,7 @@ use Inertia\Inertia;
 
 use App\Http\Controllers\MessageController;
 
-Route::middleware(['auth'])->group(function () {
+/* Route::middleware(['auth'])->group(function () {
     Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
     Route::get('/messages/create', [MessageController::class, 'create'])->name('messages.create');
     Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
@@ -19,10 +19,23 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/singlestory/{message}', [MessageController::class, 'showSingleStory'])->name('singlestory.show');
     
 });
+ */
 
+ Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
+ Route::get('/messages/create', [MessageController::class, 'create'])->name('messages.create');
+ Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
+ Route::get('/messages/{message}/edit', [MessageController::class, 'edit'])->name('messages.edit');
+ Route::put('/messages/{message}', [MessageController::class, 'update'])->name('messages.update');
+ Route::delete('/messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
+
+ Route::get('/singlestory/{message}', [MessageController::class, 'showSingleStory'])->name('singlestory.show');
+ 
+ // Route for non-authenticated users to fetch messages
+ Route::get('/public/messages', [MessageController::class, 'publicIndex'])->name('messages.publicIndex');
+ 
 
 Route::get('/', function () {
-    return Inertia::render('PinBoard', [
+    return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
@@ -30,10 +43,6 @@ Route::get('/', function () {
     ]);
 });
 
-// Moved the '/pinboard' route outside of the 'auth' middleware group
-/* Route::get('/pinboard', function () {
-    return Inertia::render('Pinboard');
-})->name('pinboard'); */
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -47,6 +56,22 @@ Route::middleware(['auth'])->group(function () {
     })->name('test');
 });
 
+/* Route::middleware(['auth'])->group(function () {
+    Route::get('/pinboard', function () {
+        return Inertia::render('PinBoard', [
+            'authId' => auth()->id() // Pass the authenticated user's ID
+        ]);
+    })->name('pinboard');
+});
+ */
+
+ Route::get('/pinboard', function () {
+    return Inertia::render('PinBoard', [
+        'auth' => [
+            'user' => auth()->user(), // Access the authenticated user directly
+        ],
+    ]);
+})->name('pinboard');
 
 
 Route::middleware(['auth'])->group(function () {
