@@ -21,27 +21,19 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|-------------Route::get('/singlestory/{message}', [MessageController::class, 'showSingleStory'])->name('singlestory.show');-------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    return Inertia::render('PinBoard', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+// Moved the '/pinboard' route outside of the 'auth' middleware group
+/* Route::get('/pinboard', function () {
+    return Inertia::render('Pinboard');
+})->name('pinboard'); */
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -55,13 +47,7 @@ Route::middleware(['auth'])->group(function () {
     })->name('test');
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/pinboard', function () {
-        return Inertia::render('PinBoard', [
-            'authId' => auth()->id() // Pass the authenticated user's ID
-        ]);
-    })->name('pinboard');
-});
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/singlestory', function () {
@@ -71,10 +57,6 @@ Route::middleware(['auth'])->group(function () {
     })->name('singlestory');
 });
 
-
-/* Route::get('/pinboard', function () {
-    return Inertia::render('PinBoard');
-})->middleware(['auth', 'verified'])->name('pinboard'); */
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
