@@ -59,7 +59,7 @@ const formatCreatedAt = (createdAt: any) => {
             <span class="absolute inset-0 border-2 border-dashed border-black dark:border-white rounded-xl"></span>
             <div
               class="relative flex flex-col h-full border-2 border-black dark:bg-white bg-slate-800 dark:text-slate-900 text-white transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 rounded-xl ">
-              <div class="p-4 pt-0 transition-opacity group-hover:absolute group-hover:opacity-0 sm:p-6 lg:p-8 rounded-xl">
+              <div  class="p-4 pt-0 transition-opacity group-hover:absolute group-hover:opacity-0 sm:p-6 lg:p-8 rounded-xl">
                 <i class="fa-solid fa-earth-africa fa-2x mt-3"></i>
                 <h2 class="mt-4 text-xl font-medium sm:text-2xl">
 
