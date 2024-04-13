@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, defineProps } from 'vue';
 import AuthenticatedLayout from "../../js/Layouts/AuthenticatedLayout.vue";
-import GuestLayout from "../../js/Layouts/GuestLayout.vue";
+import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { Head } from "@inertiajs/vue3";
 import axios from 'axios';
 
@@ -63,7 +63,7 @@ const cancelEdit = () => {
     
     <Head title="Dashboard"></Head>
 
-    <GuestLayout>
+    <GuestLayout :message="props.message" :authId="props.authId">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Single Story

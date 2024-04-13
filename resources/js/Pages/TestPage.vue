@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { ref, Ref } from 'vue';
 import { defineProps } from 'vue';
-import AuthenticatedLayout from "../../js/Layouts/AuthenticatedLayout.vue";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import axios from 'axios';
-import { createRouter, createWebHistory } from 'vue-router';
 import { Input } from '@/Components/ui/input'
 import { Label } from '@/Components/ui/label'
 

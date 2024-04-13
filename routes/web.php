@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Http;
 
 use App\Http\Controllers\MessageController;
 
@@ -54,6 +55,14 @@ Route::middleware(['auth'])->group(function () {
             'authId' => auth()->id() // Pass the authenticated user's ID
         ]);
     })->name('test');
+});
+
+
+
+Route::get('/twitter-oembed', function () {
+    $response = Http::get('https://publish.twitter.com/oembed?url=https://twitter.com/Krakatoom1?ref_src=twsrc%5Etfw');
+
+    return $response->body();
 });
 
 /* Route::middleware(['auth'])->group(function () {

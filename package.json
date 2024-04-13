@@ -11,7 +11,7 @@
         "@types/vue-router": "^2.0.0",
         "@vitejs/plugin-vue": "^5.0.0",
         "autoprefixer": "^10.4.12",
-        "axios": "^1.6.4",
+        "axios": "^1.6.8",
         "daisyui": "^4.10.1",
         "laravel-vite-plugin": "^1.0.0",
         "postcss": "^8.4.31",
@@ -36,6 +36,8 @@
         "radix-vue": "^1.5.3",
         "tailwind-merge": "^2.2.2",
         "tailwindcss-animate": "^1.0.7",
+        "twitter-widgets": "^2.0.0",
+        "unfetch": "^5.0.0",
         "vaul-vue": "^0.1.0",
         "vue-router": "^4.0.13"
     }

@@ -1,13 +1,27 @@
 <script setup lang="ts">
 import { ref, onMounted, defineProps } from 'vue';
-import AuthenticatedLayout from "../../js/Layouts/AuthenticatedLayout.vue";
-import GuestLayout from "../../js/Layouts/GuestLayout.vue";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { Head } from "@inertiajs/vue3";
 import axios from 'axios';
 
-const props = defineProps({
+/* const props = defineProps({
   auth: Object, // Define the prop type as Object
 });
+ */
+
+const props = defineProps<{
+    auth: Object;
+    message: {
+        id: number;
+        user_id: number;
+        title: string;
+        leadtext: string;
+        message: string;
+        image: string | null;
+    };
+    authId: number;
+}>(); 
 
 /* const originalMessageContent = ref(''); */
 const messages = ref<Message[]>([]);
@@ -37,6 +51,9 @@ const formatCreatedAt = (createdAt: any) => {
   const date = new Date(createdAt);
   return date.toLocaleString();
 };
+
+
+
 
 </script>
 

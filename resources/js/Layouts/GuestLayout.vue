@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import MyFooter from '@/Components/MyFooter.vue';
 import MyNavbar from '@/Components/MyNavbar.vue';
 import { Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import { defineProps } from 'vue';
 
 import { useDark, useToggle } from '@vueuse/core'
 
@@ -28,21 +28,21 @@ localStorage.theme = 'dark'
 localStorage.removeItem('theme')
 
 const props = defineProps<{
-    message: {
+    message?: {
         id: number;
-        user_id: number; // Add user_id to the message object
+        user_id: number;
         title: string;
         leadtext: string;
         message: string;
         image: string | null;
     };
-    authId: number; // Add authId prop
+    authId?: number;
 }>();
 </script>
 
 <template>
     <MyNavbar />
-    <div class="min-h-screen">
+    <div class="min-h-screen w-100 h- flex flex-auto justify-center align-middle">
         
         <!-- <div>
             
@@ -55,9 +55,12 @@ const props = defineProps<{
             </Link>
         </div> -->
 
-        <div>
-            <slot />
-        </div>
+     
+            <div>
+                <slot />
+            </div>
+            
+     
         
     </div>
     <MyFooter />

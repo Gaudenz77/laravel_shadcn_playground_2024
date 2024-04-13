@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
 import MyFooter from '@/Components/MyFooter.vue';
-import { defineProps } from 'vue';
+import { defineProps, onMounted } from 'vue';
+import TwitterTimeline from '../Components/TwitterTimeline.vue'; // Import TwitterTimeline component
+import GuestLayout from "@/Layouts/GuestLayout.vue";
 
 defineProps<{
     canLogin?: boolean;
@@ -9,7 +11,17 @@ defineProps<{
     laravelVersion: string;
     phpVersion: string;
 }>();
+
+onMounted(() => {
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://platform.twitter.com/widgets.js';
+    script.charset = 'utf-8';
+    document.body.appendChild(script);
+});
+
 </script>
+
 
 <template>
     <Head title="Welcome" />
@@ -46,8 +58,7 @@ defineProps<{
                     <div class="heroText">
                         <strong>Hello Yalls</strong>
                     </div>
-                
-            </div>
+                </div>
             </div>
             
 
@@ -56,7 +67,17 @@ defineProps<{
 
     </div>
     <div class="container mx-auto mt-8 flex justify-between">
-        <div class="w-1/3 bg-gray-200 p-4 text-center">Column 1</div>
+        <div class="w-1/3 bg-gray-200 p-4 text-center">
+                <!-- <div class="twitterOwn mt-20">
+                  
+                    <a class="twitter-timeline" href="https://twitter.com/Krakatoom1?ref_src=twsrc%5Etfw">Tweets by Krakatoom1</a>
+                    </div>
+                </div> -->
+                <div class="twitterOwn mt-20">
+                    
+                    <TwitterTimeline />
+                </div>
+                </div>
         <div class="w-1/3 bg-gray-300 p-4 text-center">Column 2</div>
         <div class="w-1/3 bg-gray-400 p-4 text-center">Column 3</div>
     </div>
