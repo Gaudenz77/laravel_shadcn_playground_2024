@@ -39,7 +39,7 @@ const submit = () => {
 
         <form @submit.prevent="submit" class="">
             <div>
-                <InputLabel for="email" value="Email" />
+                <InputLabel class="text-zinc-800 dark:text-zinc-100" for="email" value="Email" />
 
                 <TextInput
                     id="email"
@@ -55,12 +55,12 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                <InputLabel class="text-zinc-800 dark:text-zinc-100" for="password" value="Password" />
 
                 <TextInput
                     id="password"
                     type="password"
-                    class="mt-1 block w-full dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100"
+                    class="mt-1 block w-full text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100"
                     v-model="form.password"
                     required
                     autocomplete="current-password"
@@ -72,7 +72,7 @@ const submit = () => {
             <div class="block mt-4">
                 <label class="flex items-center ">
                     <Checkbox class="dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100" name="remember" v-model:checked="form.remember" />
-                    <span class="ms-2 text-sm text-gray-600">Remember me</span>
+                    <span class="ms-2 text-sm ext-zinc-800 dark:text-zinc-100">Remember me</span>
                 </label>
             </div>
 
@@ -80,7 +80,7 @@ const submit = () => {
                 <Link
                     v-if="canResetPassword"
                     :href="route('password.request')"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
                 >
                     Forgot your password?
                 </Link>

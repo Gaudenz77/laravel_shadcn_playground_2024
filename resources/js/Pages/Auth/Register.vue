@@ -28,12 +28,12 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="name" value="Name" />
+                <InputLabel class="text-zinc-800 dark:text-zinc-100" for="name" value="Name" />
 
                 <TextInput
                     id="name"
                     type="text"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100"
                     v-model="form.name"
                     required
                     autofocus
@@ -44,12 +44,12 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="email" value="Email" />
+                <InputLabel class="text-zinc-800 dark:text-zinc-100" for="email" value="Email" />
 
                 <TextInput
                     id="email"
                     type="email"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100"
                     v-model="form.email"
                     required
                     autocomplete="username"
@@ -59,12 +59,12 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                <InputLabel class="text-zinc-800 dark:text-zinc-100" for="password" value="Password" />
 
                 <TextInput
                     id="password"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100"
                     v-model="form.password"
                     required
                     autocomplete="new-password"
@@ -74,12 +74,12 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
+                <InputLabel class="text-zinc-800 dark:text-zinc-100"  for="password_confirmation" value="Confirm Password" />
 
                 <TextInput
                     id="password_confirmation"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100"
                     v-model="form.password_confirmation"
                     required
                     autocomplete="new-password"
@@ -103,3 +103,8 @@ const submit = () => {
         </form>
     </GuestLayout>
 </template>
+
+
+<style>
+
+</style>
