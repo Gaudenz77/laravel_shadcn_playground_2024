@@ -66,19 +66,23 @@ onMounted(() => {
 
 
     </div>
-    <div class="container mx-auto mt-8 flex justify-between">
+    <div class="container mx-auto mt-8 flex justify-between mb-12">
         <div class="w-1/3 bg-gray-200 p-4 text-center">
                 <!-- <div class="twitterOwn mt-20">
                   
                     <a class="twitter-timeline" href="https://twitter.com/Krakatoom1?ref_src=twsrc%5Etfw">Tweets by Krakatoom1</a>
                     </div>
                 </div> -->
+                Column 1
                 <div class="twitterOwn mt-20">
                     
                     <TwitterTimeline />
                 </div>
                 </div>
-        <div class="w-1/3 bg-gray-300 p-4 text-center">Column 2</div>
+        <div class="w-1/3 bg-gray-300 p-4 text-center">
+            Column 2
+         <!--    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a> -->
+        </div>
         <div class="w-1/3 bg-gray-400 p-4 text-center">Column 3</div>
     </div>
     <MyFooter />
