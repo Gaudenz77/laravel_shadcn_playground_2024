@@ -37,58 +37,64 @@ const submit = () => {
             {{ status }}
         </div>
 
-        <form @submit.prevent="submit" class="">
-            <div>
-                <InputLabel class="text-zinc-800 dark:text-zinc-100" for="email" value="Email" />
+        <div class="flex justify-center relative sm:align-middle mt-12 md:top-64">
+            <div class="sm:w-1/1 md:w-1/4">
+                <form @submit.prevent="submit" class="">
+                    <div class="">
+                        <InputLabel class="text-zinc-800 dark:text-zinc-100" for="email" value="Email" />
 
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
+                        <TextInput
+                            id="email"
+                            type="email"
+                            class="mt-1 block w-full text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100"
+                            v-model="form.email"
+                            required
+                            autofocus
+                            autocomplete="username"
+                        />
 
-                <InputError class="mt-2" :message="form.errors.email" />
+                        <InputError class="mt-2" :message="form.errors.email" />
+                    </div>
+
+                    <div class="mt-4">
+                        <InputLabel class="text-zinc-800 dark:text-zinc-100" for="password" value="Password" />
+
+                        <TextInput
+                            id="password"
+                            type="password"
+                            class="mt-1 block w-full text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100"
+                            v-model="form.password"
+                            required
+                            autocomplete="current-password"
+                        />
+
+                        <InputError class="mt-2" :message="form.errors.password" />
+                    </div>
+
+                    <div class="block mt-4">
+                        <label class="flex items-center ">
+                            <Checkbox class="dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100" name="remember" v-model:checked="form.remember" />
+                            <span class="ms-2 text-sm ext-zinc-800 dark:text-zinc-100">Remember me</span>
+                        </label>
+                    </div>
+
+                    <div class="flex items-center justify-end mt-4">
+                        <Link
+                            v-if="canResetPassword"
+                            :href="route('password.request')"
+                            class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
+                        >
+                            Forgot your password?
+                        </Link>
+
+                        <PrimaryButton class="ms-4 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                            Log in
+                        </PrimaryButton>
+                    </div>
+                </form>
             </div>
-
-            <div class="mt-4">
-                <InputLabel class="text-zinc-800 dark:text-zinc-100" for="password" value="Password" />
-
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100"
-                    v-model="form.password"
-                    required
-                    autocomplete="current-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
-
-            <div class="block mt-4">
-                <label class="flex items-center ">
-                    <Checkbox class="dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100" name="remember" v-model:checked="form.remember" />
-                    <span class="ms-2 text-sm ext-zinc-800 dark:text-zinc-100">Remember me</span>
-                </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <Link
-                    v-if="canResetPassword"
-                    :href="route('password.request')"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
-                >
-                    Forgot your password?
-                </Link>
-
-                <PrimaryButton class="ms-4 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
-                </PrimaryButton>
-            </div>
-        </form>
+        </div>
+        
+        
     </GuestLayout>
 </template>

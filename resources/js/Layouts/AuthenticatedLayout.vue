@@ -32,63 +32,100 @@ localStorage.theme = 'dark'
 // Whenever the user explicitly chooses to respect the OS preference
 localStorage.removeItem('theme')
 
+const props = defineProps<{
+    canLogin?: boolean;
+    canRegister?: boolean;
+    laravelVersion: string;
+    phpVersion: string;
+
+    auth: Object;
+    message: {
+        id: number;
+        user_id: number;
+        title: string;
+        leadtext: string;
+        message: string;
+        image: string | null;
+    };
+    authId: number;
+}>(); 
+
+/* defineProps<{
+    
+}>(); */
+
+import { computed } from 'vue';
+
+import { usePage } from '@inertiajs/vue3'
+
+const loggedIn = computed(() => {
+   return !!usePage().props.auth.user
+})
 </script>
 
 <template>
     <div>
-        <MyNavbar />
+        <!-- <MyNavbar /> -->
         <div class="min-h-screen">
-            <nav  v-if="$page.props.auth.user" class="bg-white border-b border-gray-100">
-                <!-- Primary Navigation Menu -->
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-between h-16">
-                        <div class="flex">
-                            <!-- Logo -->
-                            <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
-                                    <ApplicationLogo
-                                        class="block h-9 w-auto fill-current text-gray-800"
-                                    />
-                                </Link>
-                            </div>
-                            
+            <nav class="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
+  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
 
-                            <!-- Navigation Links -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+    <div class="inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 ">
+        <button @click="toggleDark()" class="text-orange-300 dark:text-cyan-100">
+            <i :class="['fa-solid fa-2x', isDark ? 'fa-moon' : 'fa-sun', 'inline-block align-middle mr-2']"></i>
+            <span>{{ isDark ? 'Dark' : 'Light' }}</span>
+        </button>
+    </div>
+    
+    <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <!-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" /> -->
+        <i class="fa-solid fa-meteor fa-2x fa-flip"></i>
+        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Hey Hey Yallzies...!</span>
+    </a>
+    <button data-collapse-toggle="navbar-dropdown" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-dropdown" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+        </svg>
+    </button>
+    <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
+      <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+        <li>
+          <!-- <a href="#" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Home</a> -->
+          <!-- <NavLink v-if="$page.props.auth.user" :href="route('dashboard')" :active="route().current('dashboard')">
+              Dashboard
+          </NavLink> -->
+        </li>
+        <li v-if="canLogin || loggedIn">
+          <NavLink v-if="loggedIn" :href="route('dashboard')"  :active="route().current('dashboard')"
+              class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+            Dashboard
+          </NavLink>
 
-                                <div class="inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out">
-                                    <button @click="toggleDark()">
-                                        <i :class="['fa-solid fa-2x', isDark ? 'fa-moon' : 'fa-sun', 'inline-block align-middle mr-2']"></i>
-                                        <span>{{ isDark ? 'Dark' : 'Light' }}</span>
-                                    </button>
-                                </div
-                               >
-                                
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
-                                </NavLink>
+          <template v-else>
+              <NavLink :href="route('login')"
+                  class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+              Log in</NavLink>
 
-                                <NavLink :href="route('test')" :active="route().current('test')">
-                                    Test Page
-                                </NavLink>
-
-                                <NavLink :href="route('pinboard')" :active="route().current('pinboard')">
-                                    Pinboard
-                                </NavLink>
-
-                                
-
-                                
-                            </div>
-
-                           
-
-        
-
-                        </div>
-
-                        <div class="hidden sm:flex sm:items-center sm:ms-6">
-                            <!-- Settings Dropdown -->
+              <NavLink v-if="canRegister" :href="route('register')"
+                  class="ms-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+              Register</NavLink>
+          </template>
+        </li>
+        <li>
+          <!-- <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Services</a> -->
+          <NavLink v-if="$page.props.auth.user" :href="route('test')" :active="route().current('test')">
+              Test Page
+          </NavLink>
+        </li>
+        <li>
+          <!-- <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Pricing</a> -->
+          <NavLink :href="route('pinboard')" :active="route().current('pinboard')">
+              Pinboard
+          </NavLink>
+        </li>
+        <li v-if="$page.props.auth.user">
+                          <div  class="hidden sm:flex sm:items-cenhometer sm:ms-6">
                             <div class="ms-3 relative">
                                 <Dropdown align="right" width="48">
                                     <template #trigger>
@@ -124,69 +161,11 @@ localStorage.removeItem('theme')
                                 </Dropdown>
                             </div>
                         </div>
-
-                        <!-- Hamburger -->
-                        <div class="-me-2 flex items-center sm:hidden">
-                            <button
-                                @click="showingNavigationDropdown = !showingNavigationDropdown"
-                                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
-                            >
-                                <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                    <path
-                                        :class="{
-                                            hidden: showingNavigationDropdown,
-                                            'inline-flex': !showingNavigationDropdown,
-                                        }"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                    <path
-                                        :class="{
-                                            hidden: !showingNavigationDropdown,
-                                            'inline-flex': showingNavigationDropdown,
-                                        }"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Responsive Navigation Menu -->
-                <div
-                    :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }"
-                    class="sm:hidden"
-                >
-                    <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
-                        </ResponsiveNavLink>
-                    </div>
-
-                    <!-- Responsive Settings Options -->
-                    <div class="pt-4 pb-1 border-t border-gray-200">
-                        <div class="px-4">
-                            <div class="font-medium text-base text-gray-800">
-                                {{ $page.props.auth.user.name }}
-                            </div>
-                            <div class="font-medium text-sm text-gray-500">{{ $page.props.auth.user.email }}</div>
-                        </div>
-
-                        <div class="mt-3 space-y-1">
-                            <ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
-                            <ResponsiveNavLink :href="route('logout')" method="post" as="button">
-                                Log Out
-                            </ResponsiveNavLink>
-                        </div>
-                    </div>
-                </div>
-            </nav>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
             
 
             <!-- Page Heading -->

@@ -9,14 +9,14 @@ import { useDark, useToggle } from '@vueuse/core'
 
 const showingNavigationDropdown = ref(false);
 
-const isDark = useDark()
+/* const isDark = useDark()
 const toggleDark = useToggle(isDark)
 // On page load or when changing themes, best to add inline in `head` to avoid FOUC
 if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
   document.documentElement.classList.add('dark')
 } else {
   document.documentElement.classList.remove('dark')
-}
+} */
 
 // Whenever the user explicitly chooses light mode
 localStorage.theme = 'light'
@@ -43,25 +43,12 @@ const props = defineProps<{
 <template>
     <MyNavbar />
     <div class="min-h-screen">
-        
-        <!-- <div>
-            
-            <Link href="/">
-                <ApplicationLogo class="w-20 h-20 fill-current text-gray-500" />
-            </Link>
-
-            <Link href="/">
-                home
-            </Link>
-        </div> -->
-
-     
-            <div>
-                <slot />
+        <div class="">     
+                <div>
+                    <slot />
+                </div>
+                
             </div>
-            
-     
-        
     </div>
     <MyFooter />
 </template>

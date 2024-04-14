@@ -5,11 +5,6 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { Head } from "@inertiajs/vue3";
 import axios from 'axios';
 
-/* const props = defineProps({
-  auth: Object, // Define the prop type as Object
-});
- */
-
 const props = defineProps<{
     auth: Object;
     message: {

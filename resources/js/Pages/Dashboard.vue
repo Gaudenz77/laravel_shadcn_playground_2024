@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import GuestLayout from "@/Layouts/GuestLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import { Button } from "@/Components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/Components/ui/alert";
@@ -54,7 +55,7 @@ const data = [
 <template>
     <Head title="Dashboard" />
 
-    <AuthenticatedLayout>
+    <GuestLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Dashboard
@@ -218,5 +219,5 @@ const data = [
                 </div>
             </div>
         </div>
-    </AuthenticatedLayout>
+    </GuestLayout>
 </template>

@@ -2,6 +2,7 @@
 import { ref, Ref } from 'vue';
 import { defineProps } from 'vue';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import GuestLayout from "@/Layouts/GuestLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import axios from 'axios';
 import { Input } from '@/Components/ui/input'
@@ -74,23 +75,24 @@ const submitForm = async () => {
     console.error(error.response.data);
   }
 };
+
 </script>
 
 <template>
-  <Head title="Dashboard" />
+  <Head title="Messagecreator" />
 
-  <AuthenticatedLayout>
+  <GuestLayout>
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Dashboard
+        Create New Messages Here:
       </h2>
     </template>
 
-    <div class="container lg:-mt-16 mt-4 px-1 lg:min-h-screen flex justify-center items-center">
+    <div class="container lg:mt-16 mt-4 px-1 lg:min-h-screen flex justify-center">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- Row 1 -->
         <div class=" col-span-2">
-          <h1 class="text-center mb-4"><strong>Your Message Belongs Here !!!</strong></h1>
+          <h1 class="text-center mb-4"><strong></strong></h1>
           <form @submit.prevent="submitForm" enctype="multipart/form-data" class="formOwnOne space-y-4">
             <div>
               <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
@@ -163,5 +165,5 @@ const submitForm = async () => {
         <div class="bg-gray-300 p-4">Row 2, Column 2</div>
       </div>
     </div>
-  </AuthenticatedLayout>
+  </GuestLayout>
 </template>
