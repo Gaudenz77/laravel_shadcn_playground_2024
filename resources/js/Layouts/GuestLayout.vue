@@ -42,7 +42,7 @@ const props = defineProps<{
 
 <template>
     <MyNavbar />
-    <div class="min-h-screen w-100 h- flex flex-auto justify-center align-middle">
+    <div class="min-h-screen">
         
         <!-- <div>
             

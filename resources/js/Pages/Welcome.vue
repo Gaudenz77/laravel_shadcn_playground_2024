@@ -25,8 +25,8 @@ onMounted(() => {
 
 <template>
     <Head title="Welcome" />
-
-    <!-- Remove max-w-7xl and mx-auto classes from the parent div -->
+    <GuestLayout>
+        <!-- Remove max-w-7xl and mx-auto classes from the parent div -->
     <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen">
         <div v-if="canLogin" class="sm:fixed sm:top-0 sm:right-0 p-6 text-end">
             <Link v-if="$page.props.auth.user" :href="route('dashboard')"
@@ -40,7 +40,7 @@ onMounted(() => {
                 >testpage</Link
             > -->
 
-            <template v-else>
+           <!--  <template v-else>
                 <Link :href="route('login')"
                     class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                 Log in</Link>
@@ -48,7 +48,7 @@ onMounted(() => {
                 <Link v-if="canRegister" :href="route('register')"
                     class="ms-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
                 Register</Link>
-            </template>
+            </template> -->
         </div>
 
 
@@ -83,9 +83,13 @@ onMounted(() => {
             Column 2
          <!--    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a> -->
         </div>
-        <div class="w-1/3 bg-gray-400 p-4 text-center">Column 3</div>
+        <div class="w-1/3 bg-gray-400 p-4 text-center">
+        <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Welcome Yalls on this Testpage?</p>&mdash; Krakatoom (@Krakatoom1) <a href="https://twitter.com/Krakatoom1/status/1779444260766360016?ref_src=twsrc%5Etfw">April 14, 2024</a></blockquote></div>
     </div>
-    <MyFooter />
+    </GuestLayout>
+
+    
+
 </template>
 
 
