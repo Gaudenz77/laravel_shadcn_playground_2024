@@ -24,6 +24,11 @@ const submit = () => {
 
 <template>
     <GuestLayout>
+        <template #header>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight text-center">
+          Register
+        </h2>
+      </template>
         <Head title="Register" />
         <div class="flex justify-center relative top-48">
             <div class="w-1/4">

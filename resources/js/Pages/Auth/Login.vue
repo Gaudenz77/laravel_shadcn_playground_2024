@@ -30,7 +30,12 @@ const submit = () => {
 </script>
 
 <template>
-    <GuestLayout class="h-[1008px]">
+    <GuestLayout>
+        <template #header class="animationcontainer">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight text-center moving-text">
+          Log In ...............................................................................................
+        </h2>
+      </template>
         <Head title="Log in"></Head>
 
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
@@ -98,3 +103,24 @@ const submit = () => {
         
     </GuestLayout>
 </template>
+
+<style>
+.animation-container {
+  overflow: hidden;
+}
+
+.moving-text {
+  white-space: nowrap;
+  position: relative;
+  animation: moveText 10s linear infinite;
+}
+
+@keyframes moveText {
+  0% {
+    right: -100%; /* Start off screen */
+  }
+  100% {
+    right: 100%; /* Move to the right until it's off screen */
+  }
+}</style>
+

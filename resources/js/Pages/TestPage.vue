@@ -95,20 +95,20 @@ const submitForm = async () => {
           <h1 class="text-center mb-4"><strong></strong></h1>
           <form @submit.prevent="submitForm" enctype="multipart/form-data" class="formOwnOne space-y-4">
             <div>
-              <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
-              <input type="text" id="title" v-model="formData.title" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+              <label for="title" class="block text-sm font-medium text-zinc-800 dark:text-zinc-100">Title</label>
+              <input type="text" id="title" v-model="formData.title" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
             </div>
             <div>
-              <label for="leadtext" class="block text-sm font-medium text-gray-700">Leadtext</label>
-              <input type="text" id="leadtext" v-model="formData.leadtext" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+              <label for="leadtext" class="block text-sm font-medium text-zinc-800 dark:text-zinc-100">Leadtext</label>
+              <input type="text" id="leadtext" v-model="formData.leadtext" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
             </div>
             <div>
-              <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
-              <textarea id="message" v-model="formData.message" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
+              <label for="message" class="block text-sm font-medium text-zinc-800 dark:text-zinc-100">Message</label>
+              <textarea id="message" v-model="formData.message" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 text-zinc-100 dark:text-zinc-800 bg-zinc-800  dark:bg-zinc-100 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
             </div>
             <div>
-              <Label for="image" class="block text-sm font-medium text-gray-700">Image</Label>
-              <Input type="file" id="image" accept="image/*" @change="handleImageChange" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md fileInputOwn" />
+              <Label for="image" class="block text-sm font-medium text-zinc-800 dark:text-zinc-100">Image</Label>
+              <Input type="file" id="image" accept="image/*" @change="handleImageChange" class="mt-1 focus:ring-indigo-500 text-zinc-100 dark:text-zinc-800 focus:border-indigo-500 bg-zinc-800 dark:bg-zinc-100 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md fileInputOwn" />
             
             </div>
             <div>
