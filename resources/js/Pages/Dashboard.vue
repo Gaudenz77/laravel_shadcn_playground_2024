@@ -62,10 +62,10 @@ const data = [
             </h2>
         </template>
 
-        <div class="py-12">
+        <div class="py-12 h-[60vh]">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">You're logged in! Indeed...?</div>
+                <div class="dark:bg-white bg-slate-800 overflow-hidden shadow-sm sm:rounded-lg p-4">
+                    <div class="p-6 dark:text-slate-800 text-white">You're logged in! Indeed...?</div>
                     <div>
                         <Button variant="destructive">Button</Button>
                     </div>

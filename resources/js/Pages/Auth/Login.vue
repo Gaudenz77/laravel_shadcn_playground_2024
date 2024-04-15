@@ -30,14 +30,14 @@ const submit = () => {
 </script>
 
 <template>
-    <GuestLayout>
+    <GuestLayout class="h-[1008px]">
         <Head title="Log in"></Head>
 
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}
         </div>
 
-        <div class="flex justify-center relative sm:align-middle mt-12 md:top-64">
+        <div class="flex justify-center relative sm:align-middle mt-12 md:top-48">
             <div class="sm:w-1/1 md:w-1/4">
                 <form @submit.prevent="submit" class="">
                     <div class="">

@@ -25,7 +25,7 @@ const submit = () => {
 <template>
     <GuestLayout>
         <Head title="Register" />
-        <div class="flex justify-center relative top-64">
+        <div class="flex justify-center relative top-48">
             <div class="w-1/4">
                 <form @submit.prevent="submit">
                     <div>
