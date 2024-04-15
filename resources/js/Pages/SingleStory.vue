@@ -65,8 +65,8 @@ const cancelEdit = () => {
 
     <GuestLayout :message="props.message" :authId="props.authId">
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Single Story
+            <h2 class="font-semibold text-xl leading-tight">
+                Single Story No. {{ props.message.id }}
             </h2>
         </template>
         <div class="min-h-screen">

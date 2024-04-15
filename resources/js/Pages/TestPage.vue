@@ -83,7 +83,7 @@ const submitForm = async () => {
 
   <GuestLayout>
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+      <h2 class="font-semibold text-xl leading-tight">
         Create New Messages Here:
       </h2>
     </template>
