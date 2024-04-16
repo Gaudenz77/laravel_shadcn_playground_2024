@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
 import MyFooter from '@/Components/MyFooter.vue';
-import { defineProps, onMounted } from 'vue';
+import { defineProps, onMounted, ref, computed } from 'vue';
 import TwitterTimeline from '../Components/TwitterTimeline.vue'; // Import TwitterTimeline component
 import GuestLayout from "@/Layouts/GuestLayout.vue";
 
@@ -20,12 +20,30 @@ onMounted(() => {
     document.body.appendChild(script);
 });
 
+
+const showSmiley = ref(false);
+
+const toggleSmiley = () => {
+    showSmiley.value = !showSmiley.value;
+};
+
+
+const gridClasses = computed(() => {
+      if (!showSmiley.value) {
+        return 'grid grid-cols-3 gap-4';
+      }
+      return 'grid grid-cols-1 gap-4';
+    });
+
+
+
 </script>
 
 
 <template>
     <Head title="Welcome" />
     <GuestLayout>
+
         <!-- Remove max-w-7xl and mx-auto classes from the parent div -->
     <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen">
         <div v-if="canLogin" class="sm:fixed sm:top-0 sm:right-0 p-6 text-end">
@@ -60,36 +78,58 @@ onMounted(() => {
                     </div>
                 </div>
             </div>
-            
-
         </div>
-
-
     </div>
-    <div class="container mx-auto mt-8 flex justify-between mb-12">
-        <div class="w-1/3 bg-gray-200 p-4 text-center">
-                <!-- <div class="twitterOwn mt-20">
-                  
-                    <a class="twitter-timeline" href="https://twitter.com/Krakatoom1?ref_src=twsrc%5Etfw">Tweets by Krakatoom1</a>
-                    </div>
-                </div> -->
-                Column 1
-                <div class="twitterOwn mt-20">
-                    
-                    <TwitterTimeline />
-                </div>
-                </div>
-        <div class="w-1/3 bg-gray-300 p-4 text-center">
+
+    <div class="container-fluid mx-auto mt-8 flex flex-col md:flex-row justify-between mb-12">
+    <!-- Column 1 -->
+        <div class="w-full md:w-1/3 bg-gray-200 p-4 text-center">
+            Column 1
+            <div class="twitterOwn mt-20 flex justify-center overflow-auto">
+                <TwitterTimeline />
+            </div>
+        </div>
+        
+        <!-- Column 2 -->
+        <div class="w-full md:w-1/3 bg-gray-300 p-4 text-center mt-4 md:mt-0">
             Column 2
-         <!--    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a> -->
         </div>
-        <div class="w-1/3 bg-gray-400 p-4 text-center">
-        <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Welcome Yalls on this Testpage?</p>&mdash; Krakatoom (@Krakatoom1) <a href="https://twitter.com/Krakatoom1/status/1779444260766360016?ref_src=twsrc%5Etfw">April 14, 2024</a></blockquote></div>
+        
+        <!-- Column 3 -->
+        <div class="w-full md:w-1/3 bg-gray-400 p-4 text-center mt-4 md:mt-0 flex justify-center overflow-auto">
+            <blockquote class="twitter-tweet ">
+                <p lang="en" dir="ltr">Welcome Yalls on this Testpage?</p>
+                &mdash; Krakatoom (@Krakatoom1) 
+                <a class="" href="https://twitter.com/Krakatoom1/status/1779444260766360016?ref_src=twsrc%5Etfw">April 14, 2024</a>
+            </blockquote>
+        </div>
     </div>
+
+
+    <div class="container mx-auto">
+        <div  class="flex flex-col md:flex-row justify-between">
+            <!-- Column 1 -->
+            <div class="w-full md:w-auto lg:w-full bg-gray-200 p-4 text-center">
+                <button @click="toggleSmiley" class="bg-blue-500 text-white px-4 py-2 rounded-full">
+                    <i class="fas fa-smile"></i> Show Smiley
+                </button>
+                <div :class="{ 'hidden': !showSmiley }" class="text-4xl mt-4">😊</div>
+            </div>
+
+            <!-- Column 2 -->
+            <div class="w-full md:w-auto lg:w-full bg-gray-300 p-4 text-center mt-4 md:mt-0">
+                Column 2
+            </div>
+
+            <!-- Column 3 -->
+            <div class="w-full md:w-auto lg:w-full bg-gray-400 p-4 text-center mt-4 md:mt-0">
+                Column 3
+            </div>
+        </div>
+    </div>
+
+
     </GuestLayout>
-
-    
-
 </template>
 
 
