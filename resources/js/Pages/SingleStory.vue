@@ -57,6 +57,11 @@ const cancelEdit = () => {
     props.message.message = originalMessageContent;
 };
 
+/* document.addEventListener("selectionchange", (e) => {
+    console.log(window.getSelection()?.toString());
+}) */
+
+
 </script>
 
 <template>
