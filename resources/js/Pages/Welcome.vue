@@ -26,6 +26,13 @@ onMounted(() => {
     elfSightScript.src = 'https://static.elfsight.com/platform/platform.js';
     elfSightScript.dataset.useServiceCore = '';
     document.body.appendChild(elfSightScript);
+
+    // Add ElfSight script
+    const tagembedScript = document.createElement('script');
+    tagembedScript.async = true;
+    tagembedScript.src = '//widget.tagembed.com/embed.min.js';
+    tagembedScript.dataset.useServiceCore = '';
+    document.body.appendChild(tagembedScript);
 });
 
 
@@ -97,10 +104,12 @@ const gridClasses = computed(() => {
                <!--  <a class="twitter-timeline" data-width="400" data-height="600" data-theme="dark" href="https://twitter.com/Krakatoom1?ref_src=twsrc%5Etfw">Tweets by Krakatoom1</a> -->
             
             
-                <a class="twitter-timeline"
+                <!-- <a class="twitter-timeline"
                     href="https://twitter.com/Krakatoom1?ref_src=twsrc%5Etf" data-width="400" data-height="600" data-theme="dark">
                     Tweets by @me
-                </a>
+                </a> -->
+
+                <div class="tagembed-widget dark:text-emerald-900 text-indigo-800" style="width:100%;height:100%"  data-theme="dark" data-widget-id="146588" view-url="https://widget.tagembed.com/146588"></div>
             </div>
         </div>
         

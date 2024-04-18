@@ -60,7 +60,7 @@ const formatCreatedAt = (createdAt: any) => {
     <GuestLayout>
       <template #header>
         <h2 class="font-semibold text-xl leading-tight">
-          Pinboard
+          Pinboard hey hey YALLZIES !!!
         </h2>
       </template>
       <div
