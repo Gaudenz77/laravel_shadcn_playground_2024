@@ -24,8 +24,8 @@ export default defineComponent({
   </script>
 
 <template>
-    <div>
-      <a class="twitter-timeline" data-width="400" data-height="600" href="https://twitter.com/Krakatoom1?ref_src=twsrc%5Etfw">Tweets by TwitterDev</a>
+    <div class="card p-4 bg-pink-500">
+      <a class="twitter-timeline"  data-width="400" data-height="600" data-tweet-limit="3" href="https://twitter.com/Krakatoom1?ref_src=twsrc%5Etfw">Tweets by Krakatoom1</a>
     </div>
   </template>
   

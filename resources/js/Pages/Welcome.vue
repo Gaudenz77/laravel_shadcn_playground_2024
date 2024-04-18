@@ -13,11 +13,19 @@ defineProps<{
 }>();
 
 onMounted(() => {
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = 'https://platform.twitter.com/widgets.js';
-    script.charset = 'utf-8';
-    document.body.appendChild(script);
+    // Add Twitter script
+    const twitterScript = document.createElement('script');
+    twitterScript.async = true;
+    twitterScript.src = 'https://platform.twitter.com/widgets.js';
+    twitterScript.charset = 'utf-8';
+    document.body.appendChild(twitterScript);
+
+    // Add ElfSight script
+    const elfSightScript = document.createElement('script');
+    elfSightScript.async = true;
+    elfSightScript.src = 'https://static.elfsight.com/platform/platform.js';
+    elfSightScript.dataset.useServiceCore = '';
+    document.body.appendChild(elfSightScript);
 });
 
 
@@ -84,14 +92,23 @@ const gridClasses = computed(() => {
     <!-- Column 1 -->
         <div class="w-full md:w-1/3 bg-gray-200 p-4 text-center">
             Column 1
-            <div class="twitterOwn mt-20 flex justify-center overflow-auto">
-                <TwitterTimeline />
+            <div  class="twitterOwn mt-20 flex justify-center overflow-auto">
+                <!-- <TwitterTimeline /> -->
+               <!--  <a class="twitter-timeline" data-width="400" data-height="600" data-theme="dark" href="https://twitter.com/Krakatoom1?ref_src=twsrc%5Etfw">Tweets by Krakatoom1</a> -->
+            
+            
+                <a class="twitter-timeline"
+                    href="https://twitter.com/Krakatoom1?ref_src=twsrc%5Etf" data-width="400" data-height="600" data-theme="dark">
+                    Tweets by @me
+                </a>
             </div>
         </div>
         
         <!-- Column 2 -->
         <div class="w-full md:w-1/3 bg-gray-300 p-4 text-center mt-4 md:mt-0">
             Column 2
+            <div class="elfsight-app-5fcd6d44-0677-4230-9a23-ef78a60b86fd" data-elfsight-app-lazy></div>
+            <!-- <a class="twitter-timeline" href="https://twitter.com/tanamongeau?ref_src=twsrc%5Etfw">Tweets by tanamongeau</a> -->
         </div>
         
         <!-- Column 3 -->
