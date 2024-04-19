@@ -97,7 +97,7 @@ const gridClasses = computed(() => {
 
     <div class="container-fluid mx-auto mt-8 flex flex-col md:flex-row justify-between mb-12">
     <!-- Column 1 -->
-        <div class="w-full md:w-1/3 bg-gray-200 p-4 text-center">
+        <div class="w-full md:w-1/3  p-4 text-center">
             Column 1
             <div  class="twitterOwn mt-20 flex justify-center overflow-auto">
                 <!-- <TwitterTimeline /> -->
@@ -109,19 +109,20 @@ const gridClasses = computed(() => {
                     Tweets by @me
                 </a> -->
 
-                <div class="tagembed-widget dark:text-emerald-900 text-indigo-800" style="width:100%;height:100%"  data-theme="dark" data-widget-id="146588" view-url="https://widget.tagembed.com/146588"></div>
+                <!-- <div class="tagembed-widget dark:text-emerald-900 text-indigo-800" style="width:100%;height:100%"  data-theme="dark" data-widget-id="146588" view-url="https://widget.tagembed.com/146588"></div> -->
+                <iframe src="https://widget.tagembed.com/146588?view" style=" width:100%;height:800px;overflow: auto;" frameborder="0" allowtransparency="true"></iframe>
             </div>
         </div>
         
         <!-- Column 2 -->
-        <div class="w-full md:w-1/3 bg-gray-300 p-4 text-center mt-4 md:mt-0">
+        <div class="w-full md:w-1/3 p-4 text-center mt-4 md:mt-0">
             Column 2
             <div class="elfsight-app-5fcd6d44-0677-4230-9a23-ef78a60b86fd" data-elfsight-app-lazy></div>
             <!-- <a class="twitter-timeline" href="https://twitter.com/tanamongeau?ref_src=twsrc%5Etfw">Tweets by tanamongeau</a> -->
         </div>
         
         <!-- Column 3 -->
-        <div class="w-full md:w-1/3 bg-gray-400 p-4 text-center mt-4 md:mt-0 flex justify-center overflow-auto">
+        <div class="w-full md:w-1/3 p-4 text-center mt-4 md:mt-0 flex justify-center overflow-auto">
             <blockquote class="twitter-tweet ">
                 <p lang="en" dir="ltr">Welcome Yalls on this Testpage?</p>
                 &mdash; Krakatoom (@Krakatoom1) 
