@@ -110,7 +110,8 @@ const gridClasses = computed(() => {
                 </a> -->
 
                 <!-- <div class="tagembed-widget dark:text-emerald-900 text-indigo-800" style="width:100%;height:100%"  data-theme="dark" data-widget-id="146588" view-url="https://widget.tagembed.com/146588"></div> -->
-                <iframe src="https://widget.tagembed.com/146588?view" style=" width:100%;height:800px;overflow: auto;" frameborder="0" allowtransparency="true"></iframe>
+                <iframe src="https://widget.tagembed.com/146588?view" style=" width:100%;height:500px;overflow: auto;" frameborder="0" allowtransparency="true"></iframe>
+            
             </div>
         </div>
         
@@ -123,11 +124,12 @@ const gridClasses = computed(() => {
         
         <!-- Column 3 -->
         <div class="w-full md:w-1/3 p-4 text-center mt-4 md:mt-0 flex justify-center overflow-auto">
-            <blockquote class="twitter-tweet ">
+            <!-- <blockquote class="twitter-tweet ">
                 <p lang="en" dir="ltr">Welcome Yalls on this Testpage?</p>
                 &mdash; Krakatoom (@Krakatoom1) 
                 <a class="" href="https://twitter.com/Krakatoom1/status/1779444260766360016?ref_src=twsrc%5Etfw">April 14, 2024</a>
-            </blockquote>
+            </blockquote> -->
+            <TwitterTimeline />
         </div>
     </div>
 
